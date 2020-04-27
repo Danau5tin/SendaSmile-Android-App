@@ -1,3 +1,65 @@
 <resources>
+
+    <!-- activity_main -->
     <string name="app_name">HelpApp</string>
+    <string name="app_intro">Together we can show our love for those who deserve it\n\n #LoveInAFewTaps</string>
+
+                <!-- activity_main buttons-->
+    <string name="home_start_but">Write a letter</string>
+    <string name="how_start_but">How does this work?</string>
+
+
+    <!-- pre_letter_creation -->
+    <string name="Who_to">Who would you like to support?</string>
+
+    <string name="type_person">Recipient:</string>
+    <string name="nhs">NHS Worker</string>
+    <string name="isolated">Isolated elderly person</string>
+
+    <string name="gender_text">Sex:</string>
+    <string name="Male">Gentleman</string>
+    <string name="Female">Lady</string>
+                <!-- pre_letter_creation buttons-->
+    <string name="continue_button">Continue</string>
+
+
+
+    <!-- create_letter_activity -->
+    <string name="reciever_confirmation">You are writing to: A MALE\n Who is: WORKING IN THE U.K. NHS.</string>
+    <string name="help_to_write_prompt">Not sure what to write? Click for quick inspiration</string>
+    <string name="write_message">Write your message here:</string>
+    <string name="sign">Your signature here:</string>
+
+                <!-- create_letter_activity buttons -->
+    <string name="continue_preview">Preview </string>
+
+
+    <!-- preview_letter_activity -->
+    <string name="front_but">See Front</string>
+    <string name="rear_but">See Rear</string>
+    <string name="edit_but">Edit</string>
+    <string name="continue_send_but">Continue and send</string>
+
+    <!-- confirm_send_activity -->
+    <string name="thank_you">Thank you! 1 more step: </string>
+    <string name="descr_long">We are all about bringing Britain together through\n
+        our messages to the elderly in isolation\n and the NHS workers on the front line\n\n</string>
+
+    <string name="help_desc">We work using a crowd-funding pool so that the U.K\'s elderly and NHS frontline can receive all your love regardless of your financial position\n\n
+        Its 100% free to submit your letter into a pool.\n\n
+        if you can afford it you can donate to send yours and others letters to those in the U.K. who deserve our support.
+    </string>
+
+    <string name="no_letters">Letters in pool waiting to be sent to our NHS Frontline and isolated Elderly</string>
+    <string name="num_letters">321</string>
+
+    <string name="radio1">Free - Submit my letter to the pool</string>
+    <string name="radio2">£2 - Send only my letter</string>
+    <string name="radio3">£5 - Send mine and 2 other letters in the pool</string>
+    <string name="radio4">£10 - Send mine and 4 other letters in the pool</string>
+
+    <string name="no_guaran">* Please note there is no guarantee your letter will be sent.</string>
+
+    <!-- confirm_send_activity buttons -->
+    <string name="send">Send!</string>
 </resources>
