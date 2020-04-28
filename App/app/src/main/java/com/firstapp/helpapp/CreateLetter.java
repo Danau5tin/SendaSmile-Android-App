@@ -27,7 +27,7 @@ public class CreateLetter extends AppCompatActivity {
         setContentView(R.layout.create_letter_activity);
 
         userImgView = findViewById(R.id.userImageView);
-
+        addImageBut = findViewById(R.id.addImageBut);
     }
 
     public void createContinueButton(View view) {
@@ -56,12 +56,8 @@ public class CreateLetter extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
             userImgView.setImageURI(data.getData());
             addImageBut.setText(R.string.change_image);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

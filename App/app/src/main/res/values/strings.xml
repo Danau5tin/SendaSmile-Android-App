@@ -42,7 +42,7 @@
         <string name="anonymous">Remain anonymous?</string>
         <string name="non_anonymous">Sign letter with your name</string>
         <string name="anon_expl">The recipient will NOT know it was you who sent them a letter</string>
-        <string name="non_anon_expl">Your letter will be signed with your provided name.\nLeave your e-mail/number and the receiver may reply to you.</string>
+        <string name="non_anon_expl">Your letter will be signed with your provided name\n\nYou can also leave your email/number if you\'d like a reply.</string>
 
         <string name="name_option">Your name</string>
         <string name="email_option">\* (Optional) Your e-mail</string>
