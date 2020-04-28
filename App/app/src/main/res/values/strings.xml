@@ -2,7 +2,7 @@
 
     <!-- activity_main -->
         <string name="app_name">HelpApp</string>
-        <string name="app_intro">Together we can send love to the isolated elderly and our NHS front line staff\n\n #LoveInAFewTaps</string>
+        <string name="app_intro">Together we can send love to our isolated elderly and NHS front line staff\n\n #LoveInAFewTaps</string>
 
                 <!-- activity_main buttons-->
             <string name="home_start_but">Write a letter</string>
@@ -12,18 +12,41 @@
     <!-- pre_letter_creation -->
         <string name="Who_to">Who do you want to write to?</string>
 
-        <string name="type_person">Recipient:</string>
         <string name="nhs">NHS Worker</string>
-        <string name="isolated">Isolated elderly person</string>
+        <string name="isolated">Isolated elderly</string>
 
-        <string name="gender_text">Sex:</string>
+        <string name="gender_text">Gender:</string>
         <string name="Male">Gentleman</string>
         <string name="Female">Lady</string>
+
+        <string name="nhs_male_explained">You will write to a gentleman working hard on the NHS front line.</string>
+        <string name="nhs_female_explained">You will write to a lady working hard on the NHS front line.</string>
+        <string name="elderly_male_explained">You will write to an elderly gentleman isolated within a British aged care facility.</string>
+        <string name="elderly_female_explained">You will write to an elderly lady isolated within a British aged care facility.</string>
+
+        <string name="nationwide">Specify area?</string>
+            <string-array name="uk_areas">
+                <item>Anywhere in the U.K.</item>
+                <item>South West England</item>
+                <item>South East England</item>
+                <item>London</item>
+                <item>Wales</item>
+                <item>West Midlands</item>
+                <item>Eastern England</item>
+                <item>East Midlands</item>
+                <item>North West England</item>
+                <item>North East England</item>
+                <item>Scotland</item>
+            </string-array>
 
         <string name="anonymous">Remain anonymous?</string>
         <string name="non_anonymous">Sign letter with your name</string>
         <string name="anon_expl">The recipient will NOT know it was you who sent them a letter</string>
-        <string name="non_anon_expl">You can sign the letter with your name</string>
+        <string name="non_anon_expl">Your letter will be signed with your provided name.\nLeave your e-mail/number and the receiver may reply to you.</string>
+
+        <string name="name_option">Your name</string>
+        <string name="email_option">\* (Optional) Your e-mail</string>
+        <string name="num_option">\* (Optional) Your number</string>
 
                 <!-- pre_letter_creation buttons-->
             <string name="continue_button">Continue</string>
@@ -33,12 +56,12 @@
     <!-- create_letter_activity -->
         <string name="reciever_confirmation">You are writing to a gentleman who is working in the NHS.</string>
         <string name="help_to_write_prompt">Not sure what to write? Click here</string>
-        <string name="write_message">Write your message here:</string>
+        <string name="write_message">Touch and type your message here</string>
 
 
                 <!-- create_letter_activity buttons -->
-            <string name="continue_preview">Add Image </string>
-            <string name="user_info">Your details</string>
+            <string name="add_image">Add Image</string>
+            <string name="change_image">Change Image</string>
 
 
     <!-- confirm_send_activity -->
@@ -73,12 +96,6 @@
 
     <!-- user_info_activity -->
         <string name="user_info_explanation"></string>
-        <string name="name_option">Your name</string>
-        <string name="number_option">Input your mobile number</string>
-        <string name="address_option">Input your address</string>
-
-                <!-- user_info_activity buttons-->
-            <string name="confirm_details_but">Confirm details</string>
 
 
 

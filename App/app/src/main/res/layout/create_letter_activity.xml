@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mariescolor">
 
     <EditText
         android:id="@+id/editText"
@@ -13,10 +13,14 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="90dp"
         android:layout_marginEnd="4dp"
+        android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="@string/write_message"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/createPreviewBut"
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/userImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,24 +31,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
         android:text="@string/reciever_confirmation"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/createPreviewBut"
+        android:id="@+id/addImageBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginBottom="20dp"
-        android:onClick="createPreviewButton"
-        android:text="@string/continue_preview"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="80dp"
+        android:onClick="addImageButton"
+        android:text="@string/add_image"
         app:layout_constraintBottom_toTopOf="@+id/createContinueBut"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/userImageView" />
 
     <TextView
         android:id="@+id/textView3"
@@ -53,7 +57,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="16dp"
         android:text="@string/help_to_write_prompt"
-        android:textColor="#001CD5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/editText"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -61,11 +67,21 @@
         android:id="@+id/createContinueBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="156dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
         android:onClick="createContinueButton"
         android:text="@string/continue_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="258dp"
+        android:layout_height="237dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

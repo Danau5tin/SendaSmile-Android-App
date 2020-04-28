@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2BA6BF"
+    android:background="@color/mariescolor"
     tools:context=".MainActivity">
 
     <ImageView
@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@raw/people_logo" />
+        app:srcCompat="@raw/instagram" />
 
     <TextView
         android:id="@+id/appIntro"
@@ -30,6 +30,9 @@
         android:text="@string/app_intro"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +45,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="46dp"
         android:layout_marginBottom="164dp"
+        android:background="#FFFFFF"
         android:onClick="homeStartButton"
         android:text="@string/home_start_but"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +63,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="46dp"
         android:layout_marginBottom="108dp"
+        android:background="#FFFFFF"
         android:text="@string/how_start_but"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
