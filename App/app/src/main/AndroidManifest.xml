@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PreLetterCreation"></activity>
+        <activity android:name=".CreateLetter"></activity>
+        <activity android:name=".ConfirmSend"></activity>
+        <activity android:name=".Sent"></activity>
+        <activity android:name=".UserInfo"></activity>
     </application>
 
 </manifest>

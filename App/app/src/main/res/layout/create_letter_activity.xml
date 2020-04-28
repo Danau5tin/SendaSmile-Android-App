@@ -9,18 +9,18 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="389dp"
-        android:layout_height="348dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="145dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="4dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/createPreviewBut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/write_message" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -29,55 +29,41 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:text="@string/reciever_confirmation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/createPreviewBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginEnd="157dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="createPreviewButton"
         android:text="@string/continue_preview"
-        app:layout_constraintEnd_toStartOf="@+id/button9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button9" />
+        app:layout_constraintBottom_toTopOf="@+id/createContinueBut"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="320dp"
-        android:layout_height="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="185dp"
         android:layout_marginBottom="16dp"
         android:text="@string/help_to_write_prompt"
         android:textColor="#001CD5"
         app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="338dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="27dp"
-        android:layout_marginBottom="34dp"
-        android:ems="10"
-        android:gravity="top"
-        android:inputType="textPersonName"
-        android:text="@string/sign"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/createContinueBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="46dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="createContinueButton"
         android:text="@string/continue_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

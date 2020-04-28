@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1B59DC"
+    android:background="#2BA6BF"
     tools:context=".MainActivity">
 
     <ImageView
@@ -22,29 +22,27 @@
 
     <TextView
         android:id="@+id/appIntro"
-        android:layout_width="266dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="112dp"
+        android:layout_width="312dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="244dp"
-        android:layout_marginEnd="134dp"
         android:gravity="center"
         android:text="@string/app_intro"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonStart"
+        android:id="@+id/homeButtonStart"
         android:layout_width="316dp"
         android:layout_height="61dp"
         android:layout_marginStart="49dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="46dp"
         android:layout_marginBottom="164dp"
+        android:onClick="homeStartButton"
         android:text="@string/home_start_but"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +52,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/homeButtonHowWork"
         android:layout_width="316dp"
         android:layout_height="61dp"
         android:layout_marginStart="49dp"
@@ -66,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStart"
+        app:layout_constraintTop_toBottomOf="@+id/homeButtonStart"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
