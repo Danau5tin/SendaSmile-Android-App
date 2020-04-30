@@ -1,28 +1,32 @@
 <resources>
 
     <!-- activity_main -->
-        <string name="app_name">HelpApp</string>
-        <string name="app_intro">Together we can send love to our isolated elderly and NHS front line staff\n\n #LoveInAFewTaps</string>
-
+        <string name="app_name">Love In A Few</string>
+        <string name="top_desc_home">#LoveInAFewTaps</string>
+        <string name="app_slogan">#LoveInAFewTaps</string>
+    <string name="how_to">3 Easy steps:</string>
+        <string name="step_1">Create a photo card for free</string>
+        <string name="step_2">We print &amp; post this to an isolated elderly person or NHS worker</string>
+        <string name="step_3">You drastically brighten someones day!</string>
                 <!-- activity_main buttons-->
-            <string name="home_start_but">Write a letter</string>
-            <string name="how_start_but">How does this work?</string>
+            <string name="home_start_but">Begin!</string>
 
 
     <!-- pre_letter_creation -->
         <string name="Who_to">Who do you want to write to?</string>
 
         <string name="nhs">NHS Worker</string>
-        <string name="isolated">Isolated elderly</string>
+        <string name="isolated">Isolated elderly person</string>
 
         <string name="gender_text">Gender:</string>
+        <string name="choose_recip_first">Select a recipient above</string>
         <string name="Male">Gentleman</string>
         <string name="Female">Lady</string>
 
         <string name="nhs_male_explained">You will write to a gentleman working hard on the NHS front line.</string>
         <string name="nhs_female_explained">You will write to a lady working hard on the NHS front line.</string>
-        <string name="elderly_male_explained">You will write to an elderly gentleman isolated within a British aged care facility.</string>
-        <string name="elderly_female_explained">You will write to an elderly lady isolated within a British aged care facility.</string>
+        <string name="elderly_male_explained">You will write to an elderly gentleman who is isolated within a British aged care facility.</string>
+        <string name="elderly_female_explained">You will write to an elderly lady who is isolated within a British aged care facility.</string>
 
         <string name="nationwide">Specify area?</string>
             <string-array name="uk_areas">
@@ -57,6 +61,7 @@
         <string name="reciever_confirmation">You are writing to a gentleman who is working in the NHS.</string>
         <string name="help_to_write_prompt">Not sure what to write? Click here</string>
         <string name="write_message">Touch and type your message here</string>
+        <string name="write_message_v2">Type your message below...</string>
 
 
                 <!-- create_letter_activity buttons -->
@@ -65,37 +70,27 @@
 
 
     <!-- confirm_send_activity -->
-        <string name="thank_you">Thank you! 1 more step: </string>
-        <string name="descr_long">We are all about bringing Britain together through\n
-        our messages to the elderly in isolation\n and the NHS workers on the front line\n\n</string>
+        <string name="descr_long">Imagine the warm smile on the gentleman\'s face when he opens your letter.\nThank you so much!</string>
+        <string name="options_desc">Now please choose whether you\'d like the NHS front line worker to open your letter as an e-mail printout or a premium quality card:</string>
 
-        <string name="help_desc">This project uses a crowd-funding pool to make sure everyone can contribute\n\n
-        So depending on your financial situation you can submit your letter into the pool for free or if you are 16+ and able check out the options below.
-        </string>
+        <string name="radio1">Free - E-mailed A4 paper printout</string>
+        <string name="radio2">£3 - Premium Quality Card</string>
 
-        <string name="no_letters">Letters in pool waiting to be sent to our NHS Frontline and isolated Elderly</string>
-        <string name="num_letters">321</string>
-
-        <string name="radio1">Free - Submit my letter to the pool</string>
-        <string name="radio2">£2 - Send only my letter</string>
-        <string name="radio3">£5 - Send mine and 2 other letters in the pool</string>
-        <string name="radio4">£10 - Send mine and 4 other letters in the pool</string>
-
-        <string name="no_guaran">* Please note there is no guarantee your letter will be sent.</string>
 
                 <!-- confirm_send_activity buttons -->
             <string name="send">Send!</string>
 
     <!--sent_activity -->
-        <string name="sent_title">You should feel great!</string>
-        <string name="sent_helped">Imagine that warm smile the gentleman on the NHS front line will have when they open your letter. We extend a genuine thank you for your time and thoughts.</string>
-        <string name="sent_share">Spread the word of how you\'ve helped and ask your family and friends to warm more hearts today.\n\n #LoveInAFewTaps</string>
+        <string name="sent_title">What a great way you\'ve spent your free time!</string>
+        <string name="sent_helped">On behalf of the NHS worker who will receive your letter we extend a genuine &amp; warm thank you for your time and thoughts.</string>
+        <string name="sent_share">Please take a moment to tell your family and friends so we can warm more lonely hearts today.</string>
 
                 <!--sent_activity buttons-->
             <string name="back_home">Return Home</string>
 
-    <!-- user_info_activity -->
-        <string name="user_info_explanation"></string>
+    <!-- referall/shares -->
+    <string name="referral">I just sent a letter to an isolated elderly person or NHS worker for free with this app, you should give it a try?</string>
+
 
 
 

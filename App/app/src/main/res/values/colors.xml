@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#005EB8</color>
-    <color name="mariescolor">#198E9C</color>
+    <color name="mariescolor">#549FDD</color>
+    <color name="maries_color_orginal">#198E9C</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow">#ffff00</color>
+    <color name="grey">#808080</color>
     <color name="colorAccent">#FFFFFF</color>
    <color name="colorPrimaryDark">#000</color>
 </resources>

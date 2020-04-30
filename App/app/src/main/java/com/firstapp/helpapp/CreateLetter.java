@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,8 +19,10 @@ import androidx.core.content.ContextCompat;
 
 public class CreateLetter extends AppCompatActivity {
 
-    Button addImageBut;
+    Button addImageBut, continueBut;
     ImageView userImgView;
+    EditText mainUserLetter;
+    Boolean userhasInput, userHasImage;
     final int IMAGE_PICK_CODE = 10;
 
     @Override
@@ -28,11 +32,18 @@ public class CreateLetter extends AppCompatActivity {
 
         userImgView = findViewById(R.id.userImageView);
         addImageBut = findViewById(R.id.addImageBut);
+        continueBut = findViewById(R.id.createContinueBut);
+        mainUserLetter = findViewById(R.id.mainLetterText);
+
+        continueBut.setEnabled(false);
     }
 
     public void createContinueButton(View view) {
+        if (mainUserLetter.getText().toString().length() > 7) {
         Intent intent = new Intent(this, ConfirmSend.class);
-        startActivity(intent);
+        startActivity(intent);} else {
+            Toast.makeText(this, "Letter must contain more than 20 words", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -58,6 +69,8 @@ public class CreateLetter extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
             userImgView.setImageURI(data.getData());
             addImageBut.setText(R.string.change_image);
+            Toast.makeText(this, "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
+            continueBut.setEnabled(true);
     }
 
     @Override

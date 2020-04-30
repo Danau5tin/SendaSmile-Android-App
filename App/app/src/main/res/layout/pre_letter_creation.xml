@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
+            android:checked="false"
             android:text="@string/nhs"
             android:textColor="@color/white" />
 
@@ -34,18 +34,19 @@
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/radioGroup3"
+        android:id="@+id/genderRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
+        app:layout_constraintTop_toBottomOf="@+id/genderText">
 
         <RadioButton
             android:id="@+id/ladyCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:checked="true"
+            android:checked="false"
             android:text="@string/Female"
             android:textColor="@color/white" />
 
@@ -66,6 +67,7 @@
         android:layout_height="57dp"
         android:onClick="preContinueButton"
         android:text="@string/continue_button"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -77,52 +79,60 @@
         android:text="@string/Who_to"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/genderText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/gender_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
 
     <Switch
-        android:id="@+id/switchAnon"
+        android:id="@+id/remainAnonSwitch"
         android:layout_width="81dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:text="@string/Yes"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/remainAnonText"
         app:layout_constraintTop_toBottomOf="@+id/destinationSpinner" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/remainAnonText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:text="@string/anonymous"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/destinationSpinner" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/specAreaText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="23dp"
         android:text="@string/nationwide"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup3" />
+        app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
 
     <TextView
         android:id="@+id/textAnon"
@@ -132,9 +142,10 @@
         android:layout_marginEnd="10dp"
         android:text="@string/anon_expl"
         android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/remainAnonText" />
 
     <EditText
         android:id="@+id/userNameEdit"
@@ -147,6 +158,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/textAnon" />
@@ -161,6 +173,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -190,22 +203,23 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         android:textSize="17sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/preCreateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <Switch
-        android:id="@+id/destinationSwitch"
+        android:id="@+id/specAreaSwitch"
         android:layout_width="83dp"
         android:layout_height="21dp"
         android:layout_marginStart="12dp"
         android:checked="false"
         android:text="@string/No"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        tools:layout_editor_absoluteY="248dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/specAreaText"
+        app:layout_constraintTop_toTopOf="@+id/specAreaText" />
 
     <Spinner
         android:id="@+id/destinationSpinner"
@@ -213,7 +227,7 @@
         android:layout_height="22dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/specAreaText" />
 
     <ImageView
         android:id="@+id/personImgView"
@@ -238,6 +252,7 @@
         android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/emailEdit" />

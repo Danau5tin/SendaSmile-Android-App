@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,15 +25,16 @@ import java.io.InputStream;
 
 public class PreLetterCreation extends AppCompatActivity {
 
-    Switch anonSwitch, destinationSwitch;
+    Switch anonSwitch, specAreaSwitch;
     Spinner destinationSpinner;
-    TextView recipientText, anonDesc;
+    TextView recipientText, anonDesc, genderText, genderWarningText, specAreaText, remainAnonText;
     EditText usernameEdit, emailEdit, numEdit;
     RadioButton nhsCheck, elderlyCheck, gentlemanCheck, ladyCheck;
-    Boolean nhsChecked, ladyChecked;
+    RadioGroup genderRadGroup;
+    Boolean nhsChecked, ladyChecked, recipChosen;
     ImageView personImage;
     InputStream imageStream;
-    ViewGroup.LayoutParams params;
+    Button continueButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,53 +44,93 @@ public class PreLetterCreation extends AppCompatActivity {
         usernameEdit = findViewById(R.id.userNameEdit);
         emailEdit = findViewById(R.id.emailEdit);
         numEdit = findViewById(R.id.numEdit);
-        usernameEdit.setVisibility(View.INVISIBLE);
-        emailEdit.setVisibility(View.INVISIBLE);
-        numEdit.setVisibility(View.INVISIBLE);
-
-        personImage = findViewById(R.id.personImgView);
-        params = personImage.getLayoutParams();
-
-        destinationSpinner = findViewById(R.id.destinationSpinner);
-        destinationSwitch = findViewById(R.id.destinationSwitch);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.uk_areas, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        destinationSpinner.setAdapter(adapter);
-        if (!destinationSwitch.isChecked()) {destinationSpinner.setVisibility(View.GONE);}
-
-        destinationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {destinationSpinner.setVisibility(View.VISIBLE); destinationSwitch.setText(R.string.Yes);}
-                else {destinationSpinner.setVisibility(View.GONE); destinationSwitch.setText(R.string.No);}}});
-
         anonDesc = findViewById(R.id.textAnon);
-        anonSwitch = findViewById(R.id.switchAnon);
+        anonSwitch = findViewById(R.id.remainAnonSwitch);
+        genderRadGroup = findViewById(R.id.genderRadioGroup);
+        genderText = findViewById(R.id.genderText);
         nhsCheck = findViewById(R.id.nhsCheckbox);
         elderlyCheck = findViewById(R.id.elderlyCheckbox);
         gentlemanCheck = findViewById(R.id.gentlemanCheckbox);
         ladyCheck = findViewById(R.id.ladyCheckbox);
         recipientText = findViewById(R.id.textRecipientDescr);
-        if (nhsCheck.isChecked()) {nhsChecked = true;} else {nhsChecked = false;}
-        if (ladyCheck.isChecked()) {ladyChecked = true;} else {ladyChecked = false;}
+        specAreaText = findViewById(R.id.specAreaText);
+        remainAnonText = findViewById(R.id.remainAnonText);
+        specAreaSwitch = findViewById(R.id.specAreaSwitch);
+        personImage = findViewById(R.id.personImgView);
+        destinationSpinner = findViewById(R.id.destinationSpinner);
+        continueButton = findViewById(R.id.preCreateButton);
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.uk_areas, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        destinationSpinner.setAdapter(adapter);
+        if (!specAreaSwitch.isChecked()) {destinationSpinner.setVisibility(View.GONE);}
+
+        specAreaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {destinationSpinner.setVisibility(View.VISIBLE); specAreaSwitch.setText(R.string.Yes);}
+                else {destinationSpinner.setVisibility(View.GONE); specAreaSwitch.setText(R.string.No);}}});
+
+
+        recipChosen = false;
+        nhsChecked = false;
+        ladyChecked = false;
+
 
         nhsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {nhsChecked = true; recipientListener();}}});
+                if (isChecked) {
+                    nhsChecked = true;
+                    if (recipChosen){
+                recipientListener();} else {
+                        genderRadGroup.setVisibility(View.VISIBLE);
+                        genderText.setVisibility(View.VISIBLE);
+                    }}}});
+
         elderlyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {nhsChecked = false; recipientListener();}}});
+                if (isChecked) {
+                    nhsChecked = false;
+                    ladyChecked = true;
+                    if (recipChosen){
+                recipientListener();} else {
+                        genderRadGroup.setVisibility(View.VISIBLE);
+                        genderText.setVisibility(View.VISIBLE);
+                        recipientListener();}}}});
+
         ladyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {ladyChecked = true; recipientListener();}}});
+                if (isChecked) {
+                    ladyChecked = true;
+                    recipChosen = true;
+                    recipientText.setVisibility(View.VISIBLE);
+                    remainAnonText.setVisibility(View.VISIBLE);
+                    anonSwitch.setVisibility(View.VISIBLE);
+                    specAreaText.setVisibility(View.VISIBLE);
+                    specAreaSwitch.setVisibility(View.VISIBLE);
+                    anonDesc.setVisibility(View.VISIBLE);
+                    continueButton.setVisibility(View.VISIBLE);
+                recipientListener();}}});
+
         gentlemanCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {ladyChecked = false; recipientListener();}}});
+                if (isChecked) {
+                    ladyChecked = false;
+                    recipChosen = true;
+                    recipientText.setVisibility(View.VISIBLE);
+                    remainAnonText.setVisibility(View.VISIBLE);
+                    anonSwitch.setVisibility(View.VISIBLE);
+                    specAreaText.setVisibility(View.VISIBLE);
+                    specAreaSwitch.setVisibility(View.VISIBLE);
+                    anonDesc.setVisibility(View.VISIBLE);
+                    continueButton.setVisibility(View.VISIBLE);
+                    recipientListener();}}});
 
         anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -101,9 +144,9 @@ public class PreLetterCreation extends AppCompatActivity {
                     anonDesc.setText(R.string.non_anon_expl);
                 } else {
                     // Show UI elements for user info
-                    usernameEdit.setVisibility(View.INVISIBLE);
-                    emailEdit.setVisibility(View.INVISIBLE);
-                    numEdit.setVisibility(View.INVISIBLE);
+                    usernameEdit.setVisibility(View.GONE);
+                    emailEdit.setVisibility(View.GONE);
+                    numEdit.setVisibility(View.GONE);
                     anonSwitch.setText(R.string.Yes);
                     anonDesc.setText(R.string.anon_expl);
                     }}});
