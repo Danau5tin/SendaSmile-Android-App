@@ -5,17 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,14 +24,13 @@ import java.io.InputStream;
 
 public class PreLetterCreation extends AppCompatActivity {
 
-    Switch anonSwitch, specAreaSwitch;
+    Switch specAreaSwitch;
     Spinner destinationSpinner;
-    TextView recipientText, anonDesc, genderText, genderWarningText, specAreaText, remainAnonText;
-    EditText usernameEdit, emailEdit, numEdit;
+    TextView recipientText, genderText, specAreaText;
     RadioButton nhsCheck, elderlyCheck, gentlemanCheck, ladyCheck;
     RadioGroup genderRadGroup;
     Boolean nhsChecked, ladyChecked, recipChosen;
-    ImageView personImage;
+    ImageView nurseImg, doctorImg, grandmaImg, grandpaImg;
     InputStream imageStream;
     Button continueButton;
 
@@ -41,11 +39,7 @@ public class PreLetterCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pre_letter_creation);
 
-        usernameEdit = findViewById(R.id.userNameEdit);
-        emailEdit = findViewById(R.id.emailEdit);
-        numEdit = findViewById(R.id.numEdit);
-        anonDesc = findViewById(R.id.textAnon);
-        anonSwitch = findViewById(R.id.remainAnonSwitch);
+
         genderRadGroup = findViewById(R.id.genderRadioGroup);
         genderText = findViewById(R.id.genderText);
         nhsCheck = findViewById(R.id.nhsCheckbox);
@@ -54,9 +48,12 @@ public class PreLetterCreation extends AppCompatActivity {
         ladyCheck = findViewById(R.id.ladyCheckbox);
         recipientText = findViewById(R.id.textRecipientDescr);
         specAreaText = findViewById(R.id.specAreaText);
-        remainAnonText = findViewById(R.id.remainAnonText);
         specAreaSwitch = findViewById(R.id.specAreaSwitch);
-        personImage = findViewById(R.id.personImgView);
+        nurseImg = findViewById(R.id.nurseImg);
+        doctorImg = findViewById(R.id.doctorImg);
+        grandmaImg = findViewById(R.id.grandmaImg);
+        grandpaImg = findViewById(R.id.grandpaImg);
+
         destinationSpinner = findViewById(R.id.destinationSpinner);
         continueButton = findViewById(R.id.preCreateButton);
 
@@ -84,23 +81,20 @@ public class PreLetterCreation extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     nhsChecked = true;
-                    if (recipChosen){
-                recipientListener();} else {
+                    recipientListener();
                         genderRadGroup.setVisibility(View.VISIBLE);
                         genderText.setVisibility(View.VISIBLE);
-                    }}}});
+                    }}});
 
         elderlyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     nhsChecked = false;
-                    ladyChecked = true;
-                    if (recipChosen){
-                recipientListener();} else {
-                        genderRadGroup.setVisibility(View.VISIBLE);
-                        genderText.setVisibility(View.VISIBLE);
-                        recipientListener();}}}});
+                    recipientListener();
+                    genderRadGroup.setVisibility(View.VISIBLE);
+                    genderText.setVisibility(View.VISIBLE);
+                        recipientListener();}}});
 
         ladyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -109,11 +103,8 @@ public class PreLetterCreation extends AppCompatActivity {
                     ladyChecked = true;
                     recipChosen = true;
                     recipientText.setVisibility(View.VISIBLE);
-                    remainAnonText.setVisibility(View.VISIBLE);
-                    anonSwitch.setVisibility(View.VISIBLE);
                     specAreaText.setVisibility(View.VISIBLE);
                     specAreaSwitch.setVisibility(View.VISIBLE);
-                    anonDesc.setVisibility(View.VISIBLE);
                     continueButton.setVisibility(View.VISIBLE);
                 recipientListener();}}});
 
@@ -124,52 +115,65 @@ public class PreLetterCreation extends AppCompatActivity {
                     ladyChecked = false;
                     recipChosen = true;
                     recipientText.setVisibility(View.VISIBLE);
-                    remainAnonText.setVisibility(View.VISIBLE);
-                    anonSwitch.setVisibility(View.VISIBLE);
                     specAreaText.setVisibility(View.VISIBLE);
                     specAreaSwitch.setVisibility(View.VISIBLE);
-                    anonDesc.setVisibility(View.VISIBLE);
                     continueButton.setVisibility(View.VISIBLE);
                     recipientListener();}}});
-
-        anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Hide UI elements for user info
-                    usernameEdit.setVisibility(View.VISIBLE);
-                    emailEdit.setVisibility(View.VISIBLE);
-                    numEdit.setVisibility(View.VISIBLE);
-                    anonSwitch.setText(R.string.No);
-                    anonDesc.setText(R.string.non_anon_expl);
-                } else {
-                    // Show UI elements for user info
-                    usernameEdit.setVisibility(View.GONE);
-                    emailEdit.setVisibility(View.GONE);
-                    numEdit.setVisibility(View.GONE);
-                    anonSwitch.setText(R.string.Yes);
-                    anonDesc.setText(R.string.anon_expl);
-                    }}});
     }
 
     public void preContinueButton(View view) {
-        Intent intent = new Intent(this, CreateLetter.class);
+        Intent intent = new Intent(this, CreateLetterV2.class);
         startActivity(intent);
     }
 
     public void recipientListener() {
         if (nhsChecked) {
-            if (ladyChecked) {recipientText.setText(R.string.nhs_female_explained);
-            imageStream = this.getResources().openRawResource(R.raw.nurse);}
-            else {recipientText.setText(R.string.nhs_male_explained);
-                imageStream = this.getResources().openRawResource(R.raw.doctor);}
-        } else {
-            if (ladyChecked) {recipientText.setText(R.string.elderly_female_explained);
-                imageStream = this.getResources().openRawResource(R.raw.grandma);}
+            // NHS Checked
+            if (recipChosen) {
+                //NHS Checked & Gender Checked
+                if (ladyChecked) {
+                    //NHS Lady Chosen
+                    doctorImg.setVisibility(View.GONE);
+                    nurseImg.setVisibility(View.VISIBLE);
+                    grandpaImg.setVisibility(View.GONE);
+                    grandmaImg.setVisibility(View.GONE);
+                    recipientText.setText(R.string.nhs_female_explained);
+                } else {
+                    //NHS Gentleman Selected
+                    doctorImg.setVisibility(View.VISIBLE);
+                    nurseImg.setVisibility(View.GONE);
+                    grandpaImg.setVisibility(View.GONE);
+                    grandmaImg.setVisibility(View.GONE);
+                    recipientText.setText(R.string.nhs_male_explained);}}
             else {
-            recipientText.setText(R.string.elderly_male_explained);
-                imageStream = this.getResources().openRawResource(R.raw.grandpa);}}
-        Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-        personImage.setImageBitmap(bitmap);
-    }
+                //NHS Checked but no Gender Checked
+                doctorImg.setVisibility(View.VISIBLE);
+                nurseImg.setVisibility(View.VISIBLE);
+                grandpaImg.setVisibility(View.GONE);
+                grandmaImg.setVisibility(View.GONE);}
+        }
+        else {
+            //Elderly Checked
+            if (recipChosen) {
+            //Elderly Checked & Gender Checked
+                if (ladyChecked) {
+                    //Elderly Lady Chosen
+                    doctorImg.setVisibility(View.GONE);
+                    nurseImg.setVisibility(View.GONE);
+                    grandpaImg.setVisibility(View.GONE);
+                    grandmaImg.setVisibility(View.VISIBLE);
+                    recipientText.setText(R.string.elderly_female_explained);}
+                else {
+                    //Elderly Gentleman Selected
+                    doctorImg.setVisibility(View.GONE);
+                    nurseImg.setVisibility(View.GONE);
+                    grandpaImg.setVisibility(View.VISIBLE);
+                    grandmaImg.setVisibility(View.GONE);
+                    recipientText.setText(R.string.elderly_male_explained);}}
+        else {
+            //Elderly Checked but no Gender Checked
+                doctorImg.setVisibility(View.GONE);
+                nurseImg.setVisibility(View.GONE);
+                grandpaImg.setVisibility(View.VISIBLE);
+                grandmaImg.setVisibility(View.VISIBLE);}}}
 }

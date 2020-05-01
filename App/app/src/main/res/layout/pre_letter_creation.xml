@@ -6,6 +6,54 @@
     android:layout_height="match_parent"
     android:background="@color/mariescolor">
 
+    <LinearLayout
+        android:id="@+id/cartoonImages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textRecipientDescr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destinationSpinner">
+
+        <ImageView
+            android:id="@+id/nurseImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:adjustViewBounds="true"
+            app:srcCompat="@raw/nurse" />
+
+        <ImageView
+            android:id="@+id/grandmaImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@raw/grandma" />
+
+        <ImageView
+            android:id="@+id/doctorImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@raw/doctor" />
+
+        <ImageView
+            android:id="@+id/grandpaImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@raw/grandpa" />
+
+    </LinearLayout>
+
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
@@ -96,31 +144,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
 
-    <Switch
-        android:id="@+id/remainAnonSwitch"
-        android:layout_width="81dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/Yes"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/remainAnonText"
-        app:layout_constraintTop_toBottomOf="@+id/destinationSpinner" />
-
-    <TextView
-        android:id="@+id/remainAnonText"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/anonymous"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        android:textStyle="bold|italic"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/destinationSpinner" />
-
     <TextView
         android:id="@+id/specAreaText"
         android:layout_width="wrap_content"
@@ -133,51 +156,6 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
-
-    <TextView
-        android:id="@+id/textAnon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/anon_expl"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/remainAnonText" />
-
-    <EditText
-        android:id="@+id/userNameEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="@string/name_option"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textAnon" />
-
-    <EditText
-        android:id="@+id/emailEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="@string/email_option"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/userNameEdit" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -228,33 +206,5 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/specAreaText" />
-
-    <ImageView
-        android:id="@+id/personImgView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginEnd="160dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/textRecipientDescr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numEdit"
-        app:srcCompat="@raw/nurse" />
-
-    <EditText
-        android:id="@+id/numEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="@string/num_option"
-        android:inputType="number"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -166,7 +166,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/nurseImg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".8"
@@ -174,7 +174,7 @@
             app:srcCompat="@raw/nurse" />
 
         <ImageView
-            android:id="@+id/imageView12"
+            android:id="@+id/grandmaImg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -182,7 +182,7 @@
             app:srcCompat="@raw/grandma" />
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/doctorImg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -190,7 +190,7 @@
             app:srcCompat="@raw/doctor" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/grandpaImg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

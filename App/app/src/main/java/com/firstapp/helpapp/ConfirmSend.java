@@ -1,5 +1,6 @@
 package com.firstapp.helpapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,22 +21,26 @@ public class ConfirmSend extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirm_send_activity);
-        Toast.makeText(this, "Letter saved", Toast.LENGTH_LONG).show();
 
-        sendBut = findViewById(R.id.confrimButton);
         freeRadio = findViewById(R.id.freeRadioBut);
         paidRadio = findViewById(R.id.paidRadioBut);
 
         paidRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sendBut.setEnabled(true);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result","paid");
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
         freeRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sendBut.setEnabled(true);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result","free");
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
     }

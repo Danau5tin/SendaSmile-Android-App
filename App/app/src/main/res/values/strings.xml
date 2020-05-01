@@ -7,7 +7,7 @@
     <string name="how_to">3 Easy steps:</string>
         <string name="step_1">Create a photo card for free</string>
         <string name="step_2">We print &amp; post this to an isolated elderly person or NHS worker</string>
-        <string name="step_3">You drastically brighten someones day!</string>
+        <string name="step_3">You brighten someones day!</string>
                 <!-- activity_main buttons-->
             <string name="home_start_but">Begin!</string>
 
@@ -43,14 +43,19 @@
                 <item>Scotland</item>
             </string-array>
 
-        <string name="anonymous">Remain anonymous?</string>
+        <string name="anonymous">Anonymous:</string>
         <string name="non_anonymous">Sign letter with your name</string>
         <string name="anon_expl">The recipient will NOT know it was you who sent them a letter</string>
-        <string name="non_anon_expl">Your letter will be signed with your provided name\n\nYou can also leave your email/number if you\'d like a reply.</string>
+        <string name="non_anon_expl">Don\'t forget to sign the letter with your name!\nIf you\'d like a reply you can also add your contact details.</string>
 
-        <string name="name_option">Your name</string>
-        <string name="email_option">\* (Optional) Your e-mail</string>
-        <string name="num_option">\* (Optional) Your number</string>
+        <string name="name_option">\* Your name</string>
+        <string name="email_option">(Optional) Your e-mail</string>
+        <string name="num_option">(Optional) Your number</string>
+
+    <string name="deliver_opt">Delivery:</string>
+    <string name="please_choose">Tap to choose an option</string>
+    <string name="paid_chosen">Your card will be printed on high quality card</string>
+    <string name="free_chosen">Your letter will be e-mailed and printed out\nTap to post a high quality photo card instead</string>
 
                 <!-- pre_letter_creation buttons-->
             <string name="continue_button">Continue</string>
@@ -60,8 +65,17 @@
     <!-- create_letter_activity -->
         <string name="reciever_confirmation">You are writing to a gentleman who is working in the NHS.</string>
         <string name="help_to_write_prompt">Not sure what to write? Click here</string>
-        <string name="write_message">Touch and type your message here</string>
+        <string name="write_message">Type your message here..\n\n\n\n\n\n\n\n\n\n\n\n\n\n</string>
         <string name="write_message_v2">Type your message below...</string>
+
+        <string-array name="male_greetings">
+            <item>Tap to choose a greeting</item>
+            <item>Dear Sir,</item>
+            <item>Hello Sir,</item>
+            <item>Hello,</item>
+            <item>Hey there!,</item>
+            <item>Hi!,</item>
+        </string-array>
 
 
                 <!-- create_letter_activity buttons -->

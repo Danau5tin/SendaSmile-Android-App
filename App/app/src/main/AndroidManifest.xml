@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".PreLetterCreation"></activity>
         <activity android:name=".CreateLetter"></activity>
+        <activity android:name=".CreateLetterV2"></activity>
         <activity android:name=".ConfirmSend"></activity>
         <activity android:name=".Sent"></activity>
     </application>
