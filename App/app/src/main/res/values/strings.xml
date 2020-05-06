@@ -1,13 +1,12 @@
 <resources>
 
     <!-- activity_main -->
-        <string name="app_name">Love In A Few</string>
-        <string name="top_desc_home">#LoveInAFewTaps</string>
-        <string name="app_slogan">#LoveInAFewTaps</string>
+        <string name="app_name">Send-a-Smile</string>
+        <string name="app_slogan">#SmileInAFewTaps</string>
     <string name="how_to">3 Easy steps:</string>
         <string name="step_1">Create a photo card for free</string>
-        <string name="step_2">We print &amp; post this to an isolated elderly person or NHS worker</string>
-        <string name="step_3">You brighten someones day!</string>
+        <string name="step_2">We e-mail or post this to an isolated elderly person or NHS worker</string>
+        <string name="step_3">Someone\'s day is brightened!</string>
                 <!-- activity_main buttons-->
             <string name="home_start_but">Begin!</string>
 
@@ -19,16 +18,15 @@
         <string name="isolated">Isolated elderly person</string>
 
         <string name="gender_text">Gender:</string>
-        <string name="choose_recip_first">Select a recipient above</string>
         <string name="Male">Gentleman</string>
         <string name="Female">Lady</string>
 
         <string name="nhs_male_explained">You will write to a gentleman working hard on the NHS front line.</string>
         <string name="nhs_female_explained">You will write to a lady working hard on the NHS front line.</string>
-        <string name="elderly_male_explained">You will write to an elderly gentleman who is isolated within a British aged care facility.</string>
-        <string name="elderly_female_explained">You will write to an elderly lady who is isolated within a British aged care facility.</string>
+        <string name="elderly_male_explained">You will write to an elderly gentleman who is isolated within a British care home.</string>
+        <string name="elderly_female_explained">You will write to an elderly lady who is isolated within a British care home.</string>
 
-        <string name="nationwide">Specify area?</string>
+        <string name="nationwide">Specify region?</string>
             <string-array name="uk_areas">
                 <item>Anywhere in the U.K.</item>
                 <item>South West England</item>
@@ -43,19 +41,13 @@
                 <item>Scotland</item>
             </string-array>
 
-        <string name="anonymous">Anonymous:</string>
-        <string name="non_anonymous">Sign letter with your name</string>
-        <string name="anon_expl">The recipient will NOT know it was you who sent them a letter</string>
-        <string name="non_anon_expl">Don\'t forget to sign the letter with your name!\nIf you\'d like a reply you can also add your contact details.</string>
+        <string name="non_anon_expl">If you\'d like a reply then leave your name and either an e-mail or mobile number in the letter above.</string>
 
-        <string name="name_option">\* Your name</string>
-        <string name="email_option">(Optional) Your e-mail</string>
-        <string name="num_option">(Optional) Your number</string>
 
     <string name="deliver_opt">Delivery:</string>
     <string name="please_choose">Tap to choose an option</string>
-    <string name="paid_chosen">Your card will be printed on high quality card</string>
-    <string name="free_chosen">Your letter will be e-mailed and printed out\nTap to post a high quality photo card instead</string>
+    <string name="paid_chosen">Your card will be printed and posted</string>
+    <string name="free_chosen">Your letter will be e-mailed and printed out\nTap to post a photo card instead</string>
 
                 <!-- pre_letter_creation buttons-->
             <string name="continue_button">Continue</string>
@@ -63,10 +55,16 @@
 
 
     <!-- create_letter_activity -->
-        <string name="reciever_confirmation">You are writing to a gentleman who is working in the NHS.</string>
-        <string name="help_to_write_prompt">Not sure what to write? Click here</string>
-        <string name="write_message">Type your message here..\n\n\n\n\n\n\n\n\n\n\n\n\n\n</string>
-        <string name="write_message_v2">Type your message below...</string>
+        <string name="rec_conf_elderly_gentleman_start">You are writing to an elderly gentleman who has been isolated for at least </string>
+        <string name="rec_conf_elderly_lady_start">You are writing to an elderly lady who has been isolated for at least </string>
+        <string name="rec_con_elderly_end"> days because of Covid-19.</string>
+        <string name="rec_conf_nhs_gentleman">You are writing to a gentleman who is working on the NHS front line battling against Covid-19 for us &amp; for Britain.</string>
+        <string name="rec_conf_nhs_lady">You are writing to a lady who is working on the NHS front line battling against Covid-19 for us &amp; for Britain.</string>
+
+
+    <string name="Include_image">Attach a photo!</string>
+    <string name="Not_Include_image">No photo</string>
+        <string name="write_message">Type your message here..\n\n\n\n\n\n\n\n\n</string>
 
         <string-array name="male_greetings">
             <item>Tap to choose a greeting</item>
@@ -84,23 +82,23 @@
 
 
     <!-- confirm_send_activity -->
-        <string name="descr_long">Imagine the warm smile on the gentleman\'s face when he opens your letter.\nThank you so much!</string>
-        <string name="options_desc">Now please choose whether you\'d like the NHS front line worker to open your letter as an e-mail printout or a premium quality card:</string>
+        <string name="options_desc_elderly">DELIVERY:\n\n\nYour letter can be sent as a free e-mail that will need to be printed by the aged care facility staff..\n\nOr alternatively your card can be printed out and posted for just £3.</string>
+        <string name="options_desc_nhs">DELIVERY:\n\n\nYour letter can be sent as an e-mail that will need to be printed by the NHS staff..\n\nOr alternatively your card can be printed out and posted for just £3.</string>
 
         <string name="radio1">Free - E-mailed A4 paper printout</string>
-        <string name="radio2">£3 - Premium Quality Card</string>
+        <string name="radio2">£3 - Printed Card Sent In Post</string>
 
 
                 <!-- confirm_send_activity buttons -->
             <string name="send">Send!</string>
 
     <!--sent_activity -->
-        <string name="sent_title">What a great way you\'ve spent your free time!</string>
-        <string name="sent_helped">On behalf of the NHS worker who will receive your letter we extend a genuine &amp; warm thank you for your time and thoughts.</string>
-        <string name="sent_share">Please take a moment to tell your family and friends so we can warm more lonely hearts today.</string>
+        <string name="sent_helped">Thank you for taking the time to brighten someone\'s day!\nWe will send your letter off very soon.</string>
+        <string name="sent_share">Please take a moment to tell your family and friends so we can warm more hearts and send more smiles today.</string>
+        <string name="how_we_do">How did we do?</string>
 
                 <!--sent_activity buttons-->
-            <string name="back_home">Return Home</string>
+            <string name="back_home">Send another!</string>
 
     <!-- referall/shares -->
     <string name="referral">I just sent a letter to an isolated elderly person or NHS worker for free with this app, you should give it a try?</string>
@@ -111,4 +109,14 @@
     <!-- Common -->
         <string name="Yes">Yes</string>
         <string name="No">No</string>
+
+    <!-- Notifications -->
+    <string name="channel_name">Delivery Updates</string>
+    <string name="channel_description">Allowing you to know when your letter has been dispatched after you\'ve submit it.</string>
+    <string name="del_not_title">A Genuine Thank You - Letter sent!</string>
+    <string name="del_not_text">You alone have created a massive positive impact for a stranger!\nDo you a free 5 minutes now to contribute another smile?</string>
+    <string name="rem_not_title">Did you know?</string>
+    <string name="rem_not_text">There are 400,000 isolated elderly in Britain right now. Do you a free 5 minutes to help contribute a smile to one of them?</string>
+
+
 </resources>

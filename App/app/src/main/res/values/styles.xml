@@ -8,4 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomTheme" parent="FirebaseUI">
+        <item name="colorPrimary">@color/mariescolor</item>
+        <item name="colorPrimaryDark">@color/mariescolor</item>
+        <item name="colorAccent">@color/common_google_signin_btn_text_light</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:windowBackground">@color/mariescolor</item>
+        <item name="colorButtonNormal">@color/common_google_signin_btn_text_light</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>
