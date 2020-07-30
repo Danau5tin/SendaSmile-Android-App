@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mariescolor"
-    tools:context=".MainActivity">
+    tools:context=".IntroHomeActivity">
 
     <TextView
         android:id="@+id/sloganText"
@@ -208,7 +208,7 @@
         android:layout_weight=".1"
         android:background="@drawable/shape4"
         android:gravity="center"
-        android:onClick="homeStartButton"
+        android:onClick="homeStartButtonPressed"
         android:text="@string/home_start_but"
         android:textColor="@color/white"
         android:textSize="16sp"

@@ -22,12 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 
 
 public class PreLetterCreation extends AppCompatActivity {
@@ -35,23 +29,23 @@ public class PreLetterCreation extends AppCompatActivity {
     Switch specAreaSwitch;
     Spinner destinationSpinner;
     TextView recipientText, genderText, specAreaText, whoToText;
-    RadioButton nhsCheck, elderlyCheck, gentlemanCheck, ladyCheck;
+    RadioButton keyCheck, elderlyCheck, gentlemanCheck, ladyCheck;
     RadioGroup genderRadGroup;
-    Boolean recipChosen, regionChosen;
+    Boolean regionChosen;
     ImageView nurseImg, doctorImg, grandmaImg, grandpaImg;
     Button continueButton;
 
     FirebaseAuth firebaseAuth;
     FirebaseHelper fireBaseHelper;
     FirebaseUser firebaseUser;
-    DatabaseReference reff;
 
-    public static Boolean nhsChecked;
+    public static Boolean keyWorkerSelected;
     public static Boolean ladyChecked;
     public static int sessionNumber;
+
+    SessionRecipient sessionRecipient;
+
     String userID;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,36 +53,17 @@ public class PreLetterCreation extends AppCompatActivity {
         setContentView(R.layout.pre_letter_creation);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        assert firebaseUser != null;
         userID = firebaseUser.getUid();
 
-
-        reff = FirebaseDatabase.getInstance().getReference(userID).child("mainUserInfo").child("sessionNum");
-        reff.runTransaction(new Transaction.Handler() {
-            // Increments the number of sessions user has had.
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                Integer currentValue = mutableData.getValue(Integer.class);
-                if (currentValue == null) {
-                    mutableData.setValue(1);
-                    sessionNumber = 1;
-                } else {
-                    mutableData.setValue(currentValue + 1);
-                    sessionNumber = currentValue+1;
-                }
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                System.out.println("Transaction completed");
-            }
-        });
-        fireBaseHelper = new FirebaseHelper(firebaseAuth, FirebaseDatabase.getInstance());
+        fireBaseHelper = new FirebaseHelper();
+        fireBaseHelper.incrementUserSessions();
+        createNewSessionRecipient();
 
         genderRadGroup = findViewById(R.id.genderRadioGroup);
         genderText = findViewById(R.id.genderText);
         whoToText = findViewById(R.id.whoText);
-        nhsCheck = findViewById(R.id.nhsCheckbox);
+        keyCheck = findViewById(R.id.keyCheckbox);
         elderlyCheck = findViewById(R.id.elderlyCheckbox);
         gentlemanCheck = findViewById(R.id.gentlemanCheckbox);
         ladyCheck = findViewById(R.id.ladyCheckbox);
@@ -99,14 +74,8 @@ public class PreLetterCreation extends AppCompatActivity {
         doctorImg = findViewById(R.id.doctorImg);
         grandmaImg = findViewById(R.id.grandmaImg);
         grandpaImg = findViewById(R.id.grandpaImg);
-        regionChosen = false;
-        recipChosen = false;
-        nhsChecked = false;
-        ladyChecked = false;
-
         destinationSpinner = findViewById(R.id.destinationSpinner);
         continueButton = findViewById(R.id.preCreateButton);
-
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.uk_areas, android.R.layout.simple_spinner_item);
@@ -114,127 +83,129 @@ public class PreLetterCreation extends AppCompatActivity {
         destinationSpinner.setAdapter(adapter);
         if (!specAreaSwitch.isChecked()) {destinationSpinner.setVisibility(View.GONE);}
 
-        specAreaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {destinationSpinner.setVisibility(View.VISIBLE); specAreaSwitch.setText(R.string.Yes);
-                regionChosen = true;}
-                else {destinationSpinner.setVisibility(View.GONE); specAreaSwitch.setText(R.string.No);
-                regionChosen = false;
-                    fireBaseHelper.updateCurrentSessionRecipient(nhsChecked, ladyChecked, sessionNumber, "cancelled");}}});
+        setOnCheckedListeners();
+        Animation expandIn = AnimationUtils.loadAnimation(this, R.anim.expand_in_small);
+        whoToText.startAnimation(expandIn);
+    }
 
+    private void createNewSessionRecipient() {
+        sessionRecipient = new SessionRecipient();
+        sessionRecipient.sessionID = sessionNumber;
+    }
 
-        nhsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    private void setOnCheckedListeners() {
+        keyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    nhsChecked = true;
-                    recipientListener();
-                        genderRadGroup.setVisibility(View.VISIBLE);
-                        genderText.setVisibility(View.VISIBLE);
+                    sessionRecipient.setKeyWorker(true);
+                    showCorrectCharacterImages();
+                    showGenderOptions();
                     }}});
 
         elderlyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    nhsChecked = false;
-                    recipientListener();
-                    genderRadGroup.setVisibility(View.VISIBLE);
-                    genderText.setVisibility(View.VISIBLE);
-                        recipientListener();}}});
+                    sessionRecipient.setKeyWorker(false);
+                    showCorrectCharacterImages();
+                    showGenderOptions();}}});
 
         ladyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ladyChecked = true;
-                    recipChosen = true;
-                    recipientText.setVisibility(View.VISIBLE);
-                    specAreaText.setVisibility(View.VISIBLE);
-                    specAreaSwitch.setVisibility(View.VISIBLE);
-                    continueButton.setVisibility(View.VISIBLE);
-                recipientListener();}}});
+                    sessionRecipient.setLady(true);
+                    showRemainingViews();
+                    showCorrectCharacterImages();}}});
 
         gentlemanCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ladyChecked = false;
-                    recipChosen = true;
-                    recipientText.setVisibility(View.VISIBLE);
-                    specAreaText.setVisibility(View.VISIBLE);
-                    specAreaSwitch.setVisibility(View.VISIBLE);
-                    continueButton.setVisibility(View.VISIBLE);
-                    recipientListener();}}});
+                    sessionRecipient.setLady(false);
+                    showRemainingViews();
+                    showCorrectCharacterImages();}}});
 
-        Animation expandIn = AnimationUtils.loadAnimation(this, R.anim.expand_in_small);
-        whoToText.startAnimation(expandIn);
+        specAreaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    destinationSpinner.setVisibility(View.VISIBLE); specAreaSwitch.setText(R.string.Yes);
+                    regionChosen = true;
+                }
+                else {
+                    destinationSpinner.setVisibility(View.GONE); specAreaSwitch.setText(R.string.No);
+                    regionChosen = false;
+                    sessionRecipient.setLocality("cancelled");}}});
+    }
+
+    private void showGenderOptions() {
+        genderRadGroup.setVisibility(View.VISIBLE);
+        genderText.setVisibility(View.VISIBLE);
+    }
+
+    private void showRemainingViews() {
+        recipientText.setVisibility(View.VISIBLE);
+        specAreaText.setVisibility(View.VISIBLE);
+        specAreaSwitch.setVisibility(View.VISIBLE);
+        continueButton.setVisibility(View.VISIBLE);
+    }
+
+    public void preContinueButton(View view) {
+        if (regionChosen) {
+            sessionRecipient.setLocality(destinationSpinner.getSelectedItem().toString());
+        }
+        fireBaseHelper.updateCurrentSessionRecipient(sessionRecipient);
+        Intent intent = new Intent(this, CreateLetterV2.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public void showCorrectCharacterImages() {
+        if (keyWorkerSelected) {
+
+            if (sessionRecipient.isCompleted()) {
+                if (ladyChecked) {
+                    showSingleCharacter(nurseImg);
+                    recipientText.setText(R.string.key_female_explained);
+                } else {
+                    showSingleCharacter(doctorImg);
+                    recipientText.setText(R.string.key_male_explained);}}
+            else {
+                showTwoCharacters(nurseImg, doctorImg);}
+        }
+        else {
+            if (sessionRecipient.isCompleted()) {
+                if (ladyChecked) {
+                    showSingleCharacter(grandmaImg);
+                    recipientText.setText(R.string.elderly_female_explained);}
+                else {
+                    showSingleCharacter(grandpaImg);
+                    recipientText.setText(R.string.elderly_male_explained);}}
+        else {
+            showTwoCharacters(grandmaImg, grandpaImg);}}}
+
+    private void showSingleCharacter(ImageView charImgView) {
+        hideAllCharacters();
+        charImgView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideAllCharacters() {
+        doctorImg.setVisibility(View.GONE);
+        nurseImg.setVisibility(View.GONE);
+        grandpaImg.setVisibility(View.GONE);
+        grandmaImg.setVisibility(View.GONE);
+    }
+
+    private void showTwoCharacters(ImageView charImgView1, ImageView charImgView2) {
+        hideAllCharacters();
+        charImgView1.setVisibility(View.VISIBLE);
+        charImgView2.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Unable to go back to login page!", Toast.LENGTH_SHORT).show();
     }
-
-    public void preContinueButton(View view) {
-        if (regionChosen) {
-            fireBaseHelper.updateCurrentSessionRecipient(nhsChecked, ladyChecked, sessionNumber, destinationSpinner.getSelectedItem().toString());
-        } else {
-        fireBaseHelper.updateCurrentSessionRecipient(nhsChecked, ladyChecked, sessionNumber);}
-        Intent intent = new Intent(this, CreateLetterV2.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public void recipientListener() {
-        if (nhsChecked) {
-            // NHS Checked
-            if (recipChosen) {
-                //NHS Checked & Gender Checked
-                if (ladyChecked) {
-                    //NHS Lady Chosen
-                    doctorImg.setVisibility(View.GONE);
-                    nurseImg.setVisibility(View.VISIBLE);
-                    grandpaImg.setVisibility(View.GONE);
-                    grandmaImg.setVisibility(View.GONE);
-                    recipientText.setText(R.string.nhs_female_explained);
-                } else {
-                    //NHS Gentleman Selected
-                    doctorImg.setVisibility(View.VISIBLE);
-                    nurseImg.setVisibility(View.GONE);
-                    grandpaImg.setVisibility(View.GONE);
-                    grandmaImg.setVisibility(View.GONE);
-                    recipientText.setText(R.string.nhs_male_explained);}}
-            else {
-                //NHS Checked but no Gender Checked
-                doctorImg.setVisibility(View.VISIBLE);
-                nurseImg.setVisibility(View.VISIBLE);
-                grandpaImg.setVisibility(View.GONE);
-                grandmaImg.setVisibility(View.GONE);}
-        }
-        else {
-            //Elderly Checked
-            if (recipChosen) {
-            //Elderly Checked & Gender Checked
-                if (ladyChecked) {
-                    //Elderly Lady Chosen
-                    doctorImg.setVisibility(View.GONE);
-                    nurseImg.setVisibility(View.GONE);
-                    grandpaImg.setVisibility(View.GONE);
-                    grandmaImg.setVisibility(View.VISIBLE);
-                    recipientText.setText(R.string.elderly_female_explained);}
-                else {
-                    //Elderly Gentleman Selected
-                    doctorImg.setVisibility(View.GONE);
-                    nurseImg.setVisibility(View.GONE);
-                    grandpaImg.setVisibility(View.VISIBLE);
-                    grandmaImg.setVisibility(View.GONE);
-                    recipientText.setText(R.string.elderly_male_explained);}}
-        else {
-            //Elderly Checked but no Gender Checked
-                doctorImg.setVisibility(View.GONE);
-                nurseImg.setVisibility(View.GONE);
-                grandpaImg.setVisibility(View.VISIBLE);
-                grandmaImg.setVisibility(View.VISIBLE);}}}
 }

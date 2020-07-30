@@ -64,12 +64,12 @@
         app:layout_constraintTop_toBottomOf="@+id/whoText">
 
         <RadioButton
-            android:id="@+id/nhsCheckbox"
+            android:id="@+id/keyCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="false"
-            android:text="@string/nhs"
+            android:text="@string/key_worker"
             android:textColor="@color/white" />
 
         <RadioButton
@@ -183,7 +183,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="@string/nhs_female_explained"
+        android:text="@string/key_female_explained"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         android:textSize="17sp"

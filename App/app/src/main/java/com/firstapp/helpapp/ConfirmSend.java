@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,8 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.billingclient.api.AcknowledgePurchaseParams;
-import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -170,12 +166,12 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
 
     public void setCharacterImg(){
         Boolean ladyChecked = PreLetterCreation.ladyChecked;
-        Boolean nhsChecked = PreLetterCreation.nhsChecked;
+        Boolean nhsChecked = PreLetterCreation.keyWorkerSelected;
         Bitmap bitmap;
         InputStream imageStream;
 
         if (nhsChecked) {
-            deliveryText.setText(getString(R.string.options_desc_nhs));
+            deliveryText.setText(getString(R.string.options_desc_key));
             if (ladyChecked) {
                 //Lady NHS Chosen
                 imageStream = this.getResources().openRawResource(R.raw.nurse);

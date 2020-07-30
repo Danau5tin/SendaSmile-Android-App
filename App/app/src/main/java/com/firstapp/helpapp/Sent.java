@@ -47,7 +47,7 @@ public class Sent extends AppCompatActivity {
         }
 
     public void sentBackHome(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, IntroHomeActivity.class);
         startActivity(intent);
     }
 

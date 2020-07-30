@@ -13,12 +13,12 @@ import androidx.core.app.NotificationCompat;
 
 public class NotificationHelper extends ContextWrapper {
 
-    public static final String CHANNEL_ID = "CHANNELID";
+    public static final String CHANNEL_ID = "CHANNEL_ID";
 
     public static final String DELIVERY_NOT = "delivery";
-    public static final int DELIVERY_NOT_TIME = 86400; //1 day
+    public static final int DELIVERY_NOT_TIME = 86400; // 1 day
     public static final String REMINDER_NOT = "reminder";
-    public static final int REMINDER_NOT_TIME = 345600; //4 days
+    public static final int REMINDER_NOT_TIME = 345600; // 4 days
 
     private NotificationManager mManager;
     Context context;
@@ -50,7 +50,7 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotification(String notification) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, IntroHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,intent,0);
 

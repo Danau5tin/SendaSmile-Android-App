@@ -1,28 +1,28 @@
 <resources>
 
-    <!-- activity_main -->
+    <!-- intro_home_activity -->
         <string name="app_name">Send-a-Smile</string>
         <string name="app_slogan">#SmileInAFewTaps</string>
     <string name="how_to">3 Easy steps:</string>
         <string name="step_1">Create a photo card for free</string>
         <string name="step_2">We e-mail or post this to an isolated elderly person or NHS worker</string>
         <string name="step_3">Someone\'s day is brightened!</string>
-                <!-- activity_main buttons-->
+                <!-- intro_home_activity buttons-->
             <string name="home_start_but">Begin!</string>
 
 
     <!-- pre_letter_creation -->
         <string name="Who_to">Who do you want to write to?</string>
 
-        <string name="nhs">NHS Worker</string>
+        <string name="key_worker">Key Worker</string>
         <string name="isolated">Isolated elderly person</string>
 
         <string name="gender_text">Gender:</string>
         <string name="Male">Gentleman</string>
         <string name="Female">Lady</string>
 
-        <string name="nhs_male_explained">You will write to a gentleman working hard on the NHS front line.</string>
-        <string name="nhs_female_explained">You will write to a lady working hard on the NHS front line.</string>
+        <string name="key_male_explained">You will write to a gentleman key worker working hard on the front line.</string>
+        <string name="key_female_explained">You will write to a lady key worker nworking hard on the front line.</string>
         <string name="elderly_male_explained">You will write to an elderly gentleman who is isolated within a British care home.</string>
         <string name="elderly_female_explained">You will write to an elderly lady who is isolated within a British care home.</string>
 
@@ -58,8 +58,8 @@
         <string name="rec_conf_elderly_gentleman_start">You are writing to an elderly gentleman who has been isolated for at least </string>
         <string name="rec_conf_elderly_lady_start">You are writing to an elderly lady who has been isolated for at least </string>
         <string name="rec_con_elderly_end"> days because of Covid-19.</string>
-        <string name="rec_conf_nhs_gentleman">You are writing to a gentleman who is working on the NHS front line battling against Covid-19 for us &amp; for Britain.</string>
-        <string name="rec_conf_nhs_lady">You are writing to a lady who is working on the NHS front line battling against Covid-19 for us &amp; for Britain.</string>
+        <string name="rec_conf_key_gentleman">You are writing to a gentleman key worker who is working on the front line battling against Covid-19 for us &amp; for Britain.</string>
+        <string name="rec_conf_key_lady">You are writing to a lady key worker who is working on the front line battling against Covid-19 for us &amp; for Britain.</string>
 
 
     <string name="Include_image">Attach a photo!</string>
@@ -83,7 +83,7 @@
 
     <!-- confirm_send_activity -->
         <string name="options_desc_elderly">DELIVERY:\n\n\nYour letter can be sent as a free e-mail that will need to be printed by the aged care facility staff..\n\nOr alternatively your card can be printed out and posted for just £3.</string>
-        <string name="options_desc_nhs">DELIVERY:\n\n\nYour letter can be sent as an e-mail that will need to be printed by the NHS staff..\n\nOr alternatively your card can be printed out and posted for just £3.</string>
+        <string name="options_desc_key">DELIVERY:\n\n\nYour letter can be sent as an e-mail that will need to be printed by the key workers..\n\nOr alternatively your card can be printed out and posted for just £3.</string>
 
         <string name="radio1">Free - E-mailed A4 paper printout</string>
         <string name="radio2">£3 - Printed Card Sent In Post</string>

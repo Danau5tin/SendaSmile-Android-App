@@ -11,8 +11,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -29,24 +33,45 @@ public class FirebaseHelper {
     private String recipData = "/recipientdata";
     private String letterDetails = "/letterDetails";
     private String feedbackDetails = "/feedbackDetails";
-    private String shareDetails = "/shareDetails";
-    private String deliveryDetails = "/deliveryDetailsPaid";
 
-
-    //Paths
     private DatabaseReference currentPath;
     private String currentRecipientPath;
     private String currentLetterDetailsPath;
-    private String currentLetterDeliveryPath;
 
-    FirebaseHelper(FirebaseAuth auth, FirebaseDatabase database){
-        this.firebaseAuth = auth.getInstance();
+    FirebaseHelper(){
+        this.firebaseAuth = FirebaseAuth.getInstance();
         this.firebaseUser = firebaseAuth.getCurrentUser();
-        this.database = database.getInstance();
+        this.database = FirebaseDatabase.getInstance();
         this.userID = firebaseUser.getUid();
     }
 
+    public void incrementUserSessions() {
+        currentPath = database.getReference(userID).child("mainUserInfo").child("sessionNum");
+
+        currentPath.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                Integer currentValue = mutableData.getValue(Integer.class);
+                if (currentValue == null) {
+                    mutableData.setValue(1);
+                    PreLetterCreation.sessionNumber = 1;
+                } else {
+                    mutableData.setValue(currentValue + 1);
+                    PreLetterCreation.sessionNumber = currentValue + 1;
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                System.out.println("Transaction completed");
+            }
+        });
+    }
+
     public void updateShareButtons(String tag) {
+        String shareDetails = "/shareDetails";
         String currentSharePath = userID + currentSession + "/" + sessionID + shareDetails;
         String shareButtonClickedPath = "/" + tag;
         currentPath = database.getReference(currentSharePath + shareButtonClickedPath);
@@ -88,52 +113,26 @@ public class FirebaseHelper {
 
     public void updateImageUrl(String url) {
         currentLetterDetailsPath = userID + currentSession + "/" + sessionID + letterDetails;
-
         String imageUrlPath = "/imageURL";
         currentPath = database.getReference(currentLetterDetailsPath + imageUrlPath);
         currentPath.setValue(url);
     }
 
-
-    public void updateCurrentSessionRecipient(Boolean nhs, Boolean lady, int sessionID){
-        // Update recipient type
-        currentRecipientPath = userID + currentSession + "/" + sessionID + recipData;
-
-        String typePath = "/type";
-        String genderPath = "/gender";
-        currentPath = database.getReference(currentRecipientPath + typePath);
-        if (nhs) {currentPath.setValue("nhs");} else {currentPath.setValue("elderly");}
-        currentPath = database.getReference(currentRecipientPath + genderPath);
-        if (lady) {currentPath.setValue("lady");} else {currentPath.setValue("gentleman");}
-    }
-
-    public void updateCurrentSessionRecipient(Boolean nhs, Boolean lady, int sessionId, String local){
-        // Update current recipient type with locality
-        currentRecipientPath = userID + currentSession + "/" + sessionId + recipData;
-        String typePath = "/type";
-        String genderPath = "/gender";
-        String localityPath = "/locality";
-        currentPath = database.getReference(currentRecipientPath + typePath);
-        if (nhs) {currentPath.setValue("nhs");} else {currentPath.setValue("elderly");}
-        currentPath = database.getReference(currentRecipientPath + genderPath);
-        if (lady) {currentPath.setValue("lady");} else {currentPath.setValue("gentleman");}
-        currentPath.setValue("gentleman");
-        currentPath = database.getReference(currentRecipientPath + localityPath);
-        currentPath.setValue(local);
+    public void updateCurrentSessionRecipient(SessionRecipient sessionRecipient){
+        currentRecipientPath = userID + currentSession + "/" + sessionRecipient.sessionID + recipData;
+        currentPath.setValue(sessionRecipient);
     }
 
     public void updateLetterDetails(String mainText) {
-        // Update current letter details
         currentLetterDetailsPath = userID + currentSession + "/" + sessionID + letterDetails;
-
         String mainTextPath = "/mainText";
         currentPath = database.getReference(currentLetterDetailsPath + mainTextPath);
         currentPath.setValue(mainText);
     }
 
     public void updateDeliveryMethodDetails(Boolean paid) {
-        // Update current delivery choice
-        currentLetterDeliveryPath = userID + currentSession + "/" + sessionID + deliveryDetails;
+        String deliveryDetails = "/deliveryDetailsPaid";
+        String currentLetterDeliveryPath = userID + currentSession + "/" + sessionID + deliveryDetails;
         currentPath = database.getReference(currentLetterDeliveryPath);
         currentPath.setValue(paid);
     }
