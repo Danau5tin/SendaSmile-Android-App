@@ -1,13 +1,12 @@
-package com.firstapp.helpapp;
+package com.firstapp.helpapp.helper;
 
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.firstapp.helpapp.CreateLetterActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +22,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import static com.firstapp.helpapp.PreLetterCreation.*;
+import static com.firstapp.helpapp.PreLetterCreationActivity.*;
 
 public class FirebaseHelper {
 
@@ -78,16 +77,18 @@ public class FirebaseHelper {
 
     public void updateBasicFeedbackButton(String tag) {
         String currentFeedbackPath = userID + currentSession + "/" + sessionRecipient.sessionID + feedbackDetails;
-        String basicFeedback = "/basicThumbsFeedback";
+        String basicFeedback = "/basicFeedback";
         currentPath = database.getReference(currentFeedbackPath + basicFeedback);
         currentPath.setValue(tag);
     }
 
     public void updateFeedbackString(String feedbackText) {
-        String currentFeedbackPath = userID + currentSession + "/" + sessionRecipient.sessionID + feedbackDetails;
-        String feedbackStringPath = "/furtherDetail";
-        currentPath = database.getReference(currentFeedbackPath + feedbackStringPath);
-        currentPath.setValue(feedbackText);
+        if (feedbackText.length() > 0) {
+            String currentFeedbackPath = userID + currentSession + "/" + sessionRecipient.sessionID + feedbackDetails;
+            String feedbackStringPath = "/furtherFeedback";
+            currentPath = database.getReference(currentFeedbackPath + feedbackStringPath);
+            currentPath.setValue(feedbackText);
+        }
     }
 
     public void uploadImage(Uri imageRef){
@@ -103,7 +104,7 @@ public class FirebaseHelper {
         uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                CreateLetterV2.imageUploadProgress = taskSnapshot.getBytesTransferred();
+                CreateLetterActivity.imageUploadProgress = taskSnapshot.getBytesTransferred();
             }
         });
     }

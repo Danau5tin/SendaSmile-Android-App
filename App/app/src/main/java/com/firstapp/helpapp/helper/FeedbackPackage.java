@@ -1,9 +1,11 @@
-package com.firstapp.helpapp;
+package com.firstapp.helpapp.helper;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
+
+import com.firstapp.helpapp.R;
 
 public class FeedbackPackage {
 

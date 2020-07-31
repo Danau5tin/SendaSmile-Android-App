@@ -18,7 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
+import com.firstapp.helpapp.helper.AlertReciever;
+import com.firstapp.helpapp.helper.NotificationHelper;
 
 
 import java.util.Arrays;
@@ -97,7 +98,7 @@ public class IntroHomeActivity extends AppCompatActivity {
         if (requestCode == AUTH_CODE) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "Successful Sign In", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, PreLetterCreation.class);
+                Intent intent = new Intent(this, PreLetterCreationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else {

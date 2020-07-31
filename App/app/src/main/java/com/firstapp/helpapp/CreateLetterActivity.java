@@ -28,12 +28,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.firstapp.helpapp.helper.AlertReciever;
+import com.firstapp.helpapp.helper.DateHelper;
+import com.firstapp.helpapp.helper.FirebaseHelper;
+import com.firstapp.helpapp.helper.MainLetterDetails;
+import com.firstapp.helpapp.helper.NotificationHelper;
+
 import java.text.ParseException;
 
-import static com.firstapp.helpapp.MainLetterDetails.*;
-import static com.firstapp.helpapp.PreLetterCreation.*;
+import static com.firstapp.helpapp.helper.MainLetterDetails.*;
+import static com.firstapp.helpapp.PreLetterCreationActivity.*;
 
-public class CreateLetterV2 extends AppCompatActivity {
+public class CreateLetterActivity extends AppCompatActivity {
 
     Button continueBut, changeImage, deliveryOption;
     TextView writingToText;
@@ -107,8 +113,8 @@ public class CreateLetterV2 extends AppCompatActivity {
     }
 
     public void writeToListener() throws ParseException {
-        Boolean ladyChecked = sessionRecipient.lady;
-        Boolean keyWorkerChecked = sessionRecipient.keyWorker;
+        Boolean ladyChecked = sessionRecipient.getLady();
+        Boolean keyWorkerChecked = sessionRecipient.getKeyWorker();
 
         if (keyWorkerChecked) {
             if (ladyChecked) {
@@ -152,7 +158,7 @@ public class CreateLetterV2 extends AppCompatActivity {
             case SUCCESS: {
                 fireBaseHelper.updateLetterDetails(mainLetterDetails);
                 startAlarm();
-                Intent intent = new Intent(this, Sent.class);
+                Intent intent = new Intent(this, SentActivity.class);
                 startActivity(intent);
             }
         }
@@ -223,7 +229,7 @@ public class CreateLetterV2 extends AppCompatActivity {
             }
 
     public void deliveryButtonPressed(View view) {
-        Intent intent = new Intent(this, ConfirmSend.class);
+        Intent intent = new Intent(this, ConfirmSendActivity.class);
         startActivityForResult(intent, DELIVERY_OPTION_CODE);
     }
 }

@@ -3,7 +3,6 @@ package com.firstapp.helpapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,10 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.firstapp.helpapp.helper.FeedbackPackage;
+import com.firstapp.helpapp.helper.FirebaseHelper;
 
-public class Sent extends AppCompatActivity {
+public class SentActivity extends AppCompatActivity {
 
     ImageButton whatsapp;
     String tag;

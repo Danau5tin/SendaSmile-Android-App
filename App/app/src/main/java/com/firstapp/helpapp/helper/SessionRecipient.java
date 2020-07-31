@@ -1,4 +1,4 @@
-package com.firstapp.helpapp;
+package com.firstapp.helpapp.helper;
 
 import com.google.firebase.database.Exclude;
 
@@ -6,28 +6,12 @@ public class SessionRecipient {
 
     Boolean keyWorker =  null;
     Boolean lady = null;
-    Boolean typeAndGenderSelected = false;
     String locality = "NA";
-
 
     @Exclude
     int sessionID = 1;
 
     public SessionRecipient() {}
-
-    public SessionRecipient(Boolean keyWorker, Boolean lady, int sessionID, String locality) {
-        this.keyWorker = keyWorker;
-        this.lady = lady;
-        this.sessionID = sessionID;
-        this.locality = locality;
-    }
-
-    public SessionRecipient(Boolean keyWorker, Boolean lady, int sessionID) {
-        this.keyWorker = keyWorker;
-        this.lady = lady;
-        this.sessionID = sessionID;
-        this.locality = "NA";
-    }
 
     public Boolean getKeyWorker() {
         return keyWorker;

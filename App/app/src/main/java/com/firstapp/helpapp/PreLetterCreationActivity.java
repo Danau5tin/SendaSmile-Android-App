@@ -20,11 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firstapp.helpapp.helper.FirebaseHelper;
+import com.firstapp.helpapp.helper.SessionRecipient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class PreLetterCreation extends AppCompatActivity {
+public class PreLetterCreationActivity extends AppCompatActivity {
 
     Switch specAreaSwitch;
     Spinner destinationSpinner;
@@ -152,16 +154,16 @@ public class PreLetterCreation extends AppCompatActivity {
             sessionRecipient.setLocality(destinationSpinner.getSelectedItem().toString());
         }
         fireBaseHelper.updateCurrentSessionRecipient(sessionRecipient);
-        Intent intent = new Intent(this, CreateLetterV2.class);
+        Intent intent = new Intent(this, CreateLetterActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void showCorrectCharacterImages() {
-        if (sessionRecipient.keyWorker) {
+        if (sessionRecipient.getKeyWorker()) {
 
             if (sessionRecipient.isCompleted()) {
-                if (sessionRecipient.lady) {
+                if (sessionRecipient.getLady()) {
                     showSingleCharacter(nurseImg);
                     recipientText.setText(R.string.key_female_explained);
                 } else {
@@ -172,7 +174,7 @@ public class PreLetterCreation extends AppCompatActivity {
         }
         else {
             if (sessionRecipient.isCompleted()) {
-                if (sessionRecipient.lady) {
+                if (sessionRecipient.getLady()) {
                     showSingleCharacter(grandmaImg);
                     recipientText.setText(R.string.elderly_female_explained);}
                 else {

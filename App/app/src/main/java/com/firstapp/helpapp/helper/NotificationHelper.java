@@ -1,4 +1,4 @@
-package com.firstapp.helpapp;
+package com.firstapp.helpapp.helper;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+
+import com.firstapp.helpapp.IntroHomeActivity;
+import com.firstapp.helpapp.R;
 
 public class NotificationHelper extends ContextWrapper {
 

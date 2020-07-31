@@ -1,11 +1,9 @@
-package com.firstapp.helpapp;
-
-import android.widget.Toast;
+package com.firstapp.helpapp.helper;
 
 import com.google.firebase.database.Exclude;
 
-import static com.firstapp.helpapp.CreateLetterV2.imageUploadProgress;
-import static com.firstapp.helpapp.MainLetterDetails.LETTER_RESULT.*;
+import static com.firstapp.helpapp.CreateLetterActivity.imageUploadProgress;
+import static com.firstapp.helpapp.helper.MainLetterDetails.LETTER_RESULT.*;
 
 public class MainLetterDetails {
 

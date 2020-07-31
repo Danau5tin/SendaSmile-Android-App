@@ -30,9 +30,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.firstapp.helpapp.PreLetterCreation.*;
+import static com.firstapp.helpapp.PreLetterCreationActivity.*;
 
-public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedListener {
+public class ConfirmSendActivity extends AppCompatActivity implements PurchasesUpdatedListener {
 
     RadioButton freeRadio, paidRadio;
     ImageView characterImg;
@@ -104,7 +104,7 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
                                                 .newBuilder()
                                                 .setSkuDetails(skuDetails)
                                                 .build();
-                                        billingClient.launchBillingFlow(ConfirmSend.this, billingFlowParams);
+                                        billingClient.launchBillingFlow(ConfirmSendActivity.this, billingFlowParams);
                                     }
                                 });
                             }
@@ -140,7 +140,7 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
                 ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
                     @Override
                     public void onConsumeResponse(BillingResult billingResult, String s) {
-                        Toast.makeText(ConfirmSend.this, "Success! Thank you", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ConfirmSendActivity.this, "Success! Thank you", Toast.LENGTH_SHORT).show();
                     }
                 };
                 billingClient.consumeAsync(consumeParams, consumeResponseListener);
@@ -162,16 +162,16 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
         Bitmap bitmap;
         InputStream imageStream;
 
-        if (sessionRecipient.keyWorker) {
+        if (sessionRecipient.getKeyWorker()) {
             deliveryText.setText(getString(R.string.options_desc_key));
-            if (sessionRecipient.lady) {
+            if (sessionRecipient.getLady()) {
                 imageStream = this.getResources().openRawResource(R.raw.nurse);
             } else {
                 imageStream = this.getResources().openRawResource(R.raw.doctor);
             }
         } else {
             deliveryText.setText(getString(R.string.options_desc_elderly));
-            if (sessionRecipient.lady) {
+            if (sessionRecipient.getLady()) {
                 imageStream = this.getResources().openRawResource(R.raw.grandma);
             } else {
                 imageStream = this.getResources().openRawResource(R.raw.grandpa);

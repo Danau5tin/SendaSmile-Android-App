@@ -1,11 +1,12 @@
-package com.firstapp.helpapp;
+package com.firstapp.helpapp.helper;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+
+import com.firstapp.helpapp.helper.NotificationHelper;
 
 public class AlertReciever extends BroadcastReceiver {
 
