@@ -20,12 +20,6 @@ public class Sent extends AppCompatActivity {
 
     ImageButton whatsapp;
     String tag;
-    PackageManager packageManager;
-    final String WHATSAPP_PACKAGE = "com.whatsapp";
-    final String FACEBOOK_PACKAGE = "com.facebook.orca";
-    final String INSTAGRAM_PACKAGE = "com.instagram.android";
-    final String TWITTER_PACKAGE = "com.twitter.android";
-    Boolean packageInstalled = false;
     ImageButton thumbsUp, thumbsDown;
     FirebaseHelper firebaseHelper;
 
@@ -37,8 +31,7 @@ public class Sent extends AppCompatActivity {
         whatsapp = findViewById(R.id.whatsappButton);
         thumbsUp = findViewById(R.id.thumbsUp);
         thumbsDown = findViewById(R.id.thumbsDown);
-        packageManager = this.getPackageManager();
-        firebaseHelper = new FirebaseHelper(FirebaseAuth.getInstance(), FirebaseDatabase.getInstance());
+        firebaseHelper = new FirebaseHelper();
     }
 
     @Override
@@ -52,39 +45,10 @@ public class Sent extends AppCompatActivity {
     }
 
     public void shareButtonPressed(View view) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.referral));
-        sendIntent.setType("text/plain");
+        FeedbackPackage feedbackPackage = new FeedbackPackage(this, firebaseHelper);
         tag = String.valueOf(view.getTag());
-        packageInstalled = isPackageInstalled(tag, packageManager);
-        firebaseHelper.updateShareButtons(tag);
-
-        if (packageInstalled) {
-            if (tag.equals(WHATSAPP_PACKAGE)) {sendIntent.setPackage(WHATSAPP_PACKAGE); startActivity(sendIntent);}
-            else if (tag.equals(INSTAGRAM_PACKAGE)) {sendIntent.setPackage(INSTAGRAM_PACKAGE); startActivity(sendIntent);}
-            else if (tag.equals(TWITTER_PACKAGE)) {sendIntent.setPackage(TWITTER_PACKAGE); startActivity(sendIntent);}
-            else if (tag.equals(FACEBOOK_PACKAGE)) {sendIntent.setPackage(FACEBOOK_PACKAGE); startActivity(sendIntent);}
-        } else {
-            String appName = "";
-            if (tag.equals(WHATSAPP_PACKAGE)) {appName = "WhatsApp";}
-            else if (tag.equals(FACEBOOK_PACKAGE)) {appName = "Facebook Messenger";}
-            else if (tag.equals(TWITTER_PACKAGE)) {appName = "Twitter";}
-            if (tag.equals(INSTAGRAM_PACKAGE)) {appName = "Instagram";}
-            Toast.makeText(this, "Could not locate " + appName + ", try one of these instead!", Toast.LENGTH_LONG).show();
-        }
-        startActivity(sendIntent);
+        feedbackPackage.launchExternalApp(tag);
     }
-
-    private boolean isPackageInstalled(String packageName, PackageManager packageManager) {
-        try {
-            packageManager.getPackageInfo(packageName, 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
-
 
     public void feedbackButtonPressed(View view) {
         String tag = view.getTag().toString();

@@ -3,6 +3,7 @@ package com.firstapp.helpapp;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,21 +23,18 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static com.firstapp.helpapp.PreLetterCreation.*;
+
 public class FirebaseHelper {
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
-    int sessionID = PreLetterCreation.sessionNumber;
     String userID;
-    private String currentSession = "/currentsession";
-    private String recipData = "/recipientdata";
-    private String letterDetails = "/letterDetails";
+    private String currentSession = "/currentSession";
     private String feedbackDetails = "/feedbackDetails";
 
     private DatabaseReference currentPath;
-    private String currentRecipientPath;
-    private String currentLetterDetailsPath;
 
     FirebaseHelper(){
         this.firebaseAuth = FirebaseAuth.getInstance();
@@ -55,10 +53,10 @@ public class FirebaseHelper {
                 Integer currentValue = mutableData.getValue(Integer.class);
                 if (currentValue == null) {
                     mutableData.setValue(1);
-                    PreLetterCreation.sessionNumber = 1;
+                    sessionRecipient.sessionID = 1;
                 } else {
                     mutableData.setValue(currentValue + 1);
-                    PreLetterCreation.sessionNumber = currentValue + 1;
+                    sessionRecipient.sessionID = currentValue + 1;
                 }
                 return Transaction.success(mutableData);
             }
@@ -72,21 +70,21 @@ public class FirebaseHelper {
 
     public void updateShareButtons(String tag) {
         String shareDetails = "/shareDetails";
-        String currentSharePath = userID + currentSession + "/" + sessionID + shareDetails;
+        String currentSharePath = userID + currentSession + "/" + sessionRecipient.sessionID + shareDetails;
         String shareButtonClickedPath = "/" + tag;
         currentPath = database.getReference(currentSharePath + shareButtonClickedPath);
         currentPath.setValue("clicked");
     }
 
     public void updateBasicFeedbackButton(String tag) {
-        String currentFeedbackPath = userID + currentSession + "/" + sessionID + feedbackDetails;
+        String currentFeedbackPath = userID + currentSession + "/" + sessionRecipient.sessionID + feedbackDetails;
         String basicFeedback = "/basicThumbsFeedback";
         currentPath = database.getReference(currentFeedbackPath + basicFeedback);
         currentPath.setValue(tag);
     }
 
     public void updateFeedbackString(String feedbackText) {
-        String currentFeedbackPath = userID + currentSession + "/" + sessionID + feedbackDetails;
+        String currentFeedbackPath = userID + currentSession + "/" + sessionRecipient.sessionID + feedbackDetails;
         String feedbackStringPath = "/furtherDetail";
         currentPath = database.getReference(currentFeedbackPath + feedbackStringPath);
         currentPath.setValue(feedbackText);
@@ -94,13 +92,12 @@ public class FirebaseHelper {
 
     public void uploadImage(Uri imageRef){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference userStorageRef = storageReference.child(userID + "/" + sessionID);
+        StorageReference userStorageRef = storageReference.child(userID + "/" + sessionRecipient.sessionID);
         UploadTask uploadTask = userStorageRef.putFile(imageRef);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                updateImageUrl(downloadUrl);
+                Log.i("Image", "Image upload success");
             }
         });
         uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -111,28 +108,23 @@ public class FirebaseHelper {
         });
     }
 
-    public void updateImageUrl(String url) {
-        currentLetterDetailsPath = userID + currentSession + "/" + sessionID + letterDetails;
-        String imageUrlPath = "/imageURL";
-        currentPath = database.getReference(currentLetterDetailsPath + imageUrlPath);
-        currentPath.setValue(url);
-    }
-
     public void updateCurrentSessionRecipient(SessionRecipient sessionRecipient){
-        currentRecipientPath = userID + currentSession + "/" + sessionRecipient.sessionID + recipData;
+        String recipData = "/recipientdata";
+        String currentRecipientPath = userID + currentSession + "/" + sessionRecipient.sessionID + recipData;
+        currentPath = database.getReference(currentRecipientPath);
         currentPath.setValue(sessionRecipient);
     }
 
-    public void updateLetterDetails(String mainText) {
-        currentLetterDetailsPath = userID + currentSession + "/" + sessionID + letterDetails;
-        String mainTextPath = "/mainText";
-        currentPath = database.getReference(currentLetterDetailsPath + mainTextPath);
-        currentPath.setValue(mainText);
+    public void updateLetterDetails(MainLetterDetails mainLetterDetails) {
+        String letterDetails = "/letterDetails";
+        String currentLetterDetailsPath = userID + currentSession + "/" + sessionRecipient.sessionID + letterDetails;
+        currentPath = database.getReference(currentLetterDetailsPath);
+        currentPath.setValue(mainLetterDetails);
     }
 
     public void updateDeliveryMethodDetails(Boolean paid) {
         String deliveryDetails = "/deliveryDetailsPaid";
-        String currentLetterDeliveryPath = userID + currentSession + "/" + sessionID + deliveryDetails;
+        String currentLetterDeliveryPath = userID + currentSession + "/" + sessionRecipient.sessionID + deliveryDetails;
         currentPath = database.getReference(currentLetterDeliveryPath);
         currentPath.setValue(paid);
     }

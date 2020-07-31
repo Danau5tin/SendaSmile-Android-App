@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.firstapp.helpapp.PreLetterCreation.*;
+
 public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedListener {
 
     RadioButton freeRadio, paidRadio;
@@ -71,15 +73,11 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-                    // Successful
                     loadAllSkus();
                 }
             }
-
             @Override
-            public void onBillingServiceDisconnected() {
-
-            }
+            public void onBillingServiceDisconnected() { }
         });
     }
 
@@ -95,17 +93,13 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
                 @Override
                 public void onSkuDetailsResponse(final BillingResult billingResult, List<SkuDetails> list) {
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                        // Apparently App must be uploaded to get past this point! This is currently where I get to and the list is of size 0.
                         for (Object skuDetailsObject : list) {
                             final SkuDetails skuDetails = (SkuDetails) skuDetailsObject;
                             if (skuDetails.getSku().equals(sku)) {
-                                //If the button does not grey out then all is well.
                                 paidRadio.setEnabled(true);
-
                                 paidRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                     @Override
                                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                                         BillingFlowParams billingFlowParams = BillingFlowParams
                                                 .newBuilder()
                                                 .setSkuDetails(skuDetails)
@@ -165,28 +159,21 @@ public class ConfirmSend extends AppCompatActivity implements PurchasesUpdatedLi
     }
 
     public void setCharacterImg(){
-        Boolean ladyChecked = PreLetterCreation.ladyChecked;
-        Boolean nhsChecked = PreLetterCreation.keyWorkerSelected;
         Bitmap bitmap;
         InputStream imageStream;
 
-        if (nhsChecked) {
+        if (sessionRecipient.keyWorker) {
             deliveryText.setText(getString(R.string.options_desc_key));
-            if (ladyChecked) {
-                //Lady NHS Chosen
+            if (sessionRecipient.lady) {
                 imageStream = this.getResources().openRawResource(R.raw.nurse);
-
             } else {
-                //Gentleman NHS Chosen
                 imageStream = this.getResources().openRawResource(R.raw.doctor);
             }
         } else {
             deliveryText.setText(getString(R.string.options_desc_elderly));
-            if (ladyChecked) {
-                //Elderly Lady Chosen
+            if (sessionRecipient.lady) {
                 imageStream = this.getResources().openRawResource(R.raw.grandma);
             } else {
-                //Elderly Gentleman Chosen
                 imageStream = this.getResources().openRawResource(R.raw.grandpa);
             }
         }

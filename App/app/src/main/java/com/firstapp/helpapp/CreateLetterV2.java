@@ -28,19 +28,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
+import static com.firstapp.helpapp.MainLetterDetails.*;
+import static com.firstapp.helpapp.PreLetterCreation.*;
 
 public class CreateLetterV2 extends AppCompatActivity {
 
     Button continueBut, changeImage, deliveryOption;
     TextView writingToText;
-    Boolean result, deliveryChosen, imageRequired, imageChosen;
+    MainLetterDetails mainLetterDetails;
     EditText mainUserLetter;
     LinearLayout deliveryLayout;
     ConstraintLayout imageLayout;
@@ -48,7 +45,6 @@ public class CreateLetterV2 extends AppCompatActivity {
     ImageView userImgView;
     final int IMAGE_PICK_CODE = 10;
     final int DELIVERY_OPTION_CODE = 20;
-    FirebaseAuth firebaseAuth;
     FirebaseHelper fireBaseHelper;
     Animation expandIn;
     RadioButton yesPhoto, noPhoto;
@@ -59,6 +55,7 @@ public class CreateLetterV2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_letter_activity_v2);
+        mainLetterDetails = new MainLetterDetails();
 
         userImgView = findViewById(R.id.userImageViewV2);
         addImageBut = findViewById(R.id.addimageButV2);
@@ -72,13 +69,8 @@ public class CreateLetterV2 extends AppCompatActivity {
         imageLayout = findViewById(R.id.imageLayout);
         yesPhoto = findViewById(R.id.yesPhotoRadio);
         noPhoto = findViewById(R.id.noPhotoRadio);
-        deliveryChosen = false;
-        imageChosen = false;
-        imageRequired =  true;
-        firebaseAuth = FirebaseAuth.getInstance();
-        fireBaseHelper = new FirebaseHelper(firebaseAuth, FirebaseDatabase.getInstance());
 
-
+        fireBaseHelper = new FirebaseHelper();
 
         changeImage.setVisibility(View.VISIBLE);
         changeImage.setText(R.string.add_image);
@@ -98,7 +90,7 @@ public class CreateLetterV2 extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     imageLayout.setVisibility(View.VISIBLE);
-                    imageRequired = true;
+                    mainLetterDetails.setImageRequired(true);
                 }
             }
         });
@@ -107,112 +99,78 @@ public class CreateLetterV2 extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     imageLayout.setVisibility(View.GONE);
-                    imageRequired = false;
                     deliveryLayout.setVisibility(View.VISIBLE);
-                    fireBaseHelper.updateImageUrl("Image not chosen or possibly uploaded but cancelled");
+                    mainLetterDetails.setImageRequired(false);
                 }
             }
         });
     }
 
     public void writeToListener() throws ParseException {
-        Boolean ladyChecked = PreLetterCreation.ladyChecked;
-        Boolean nhsChecked = PreLetterCreation.keyWorkerSelected;
+        Boolean ladyChecked = sessionRecipient.lady;
+        Boolean keyWorkerChecked = sessionRecipient.keyWorker;
 
-        if (nhsChecked) {
-            if (ladyChecked) {//Lady NHS Chosen
+        if (keyWorkerChecked) {
+            if (ladyChecked) {
                 writingToText.setText(getString(R.string.rec_conf_key_lady));
                  } else {
-                //Gentleman NHS Chosen
                 writingToText.setText(getString(R.string.rec_conf_key_gentleman));
             }
         } else {
-
             String lockDownDate= "23/03/2020";
-            Date currentTime = Calendar.getInstance().getTime();
-            Date date1;
-            Date date2;
-            SimpleDateFormat dates = new SimpleDateFormat("dd/MM/yyyy");
-            String FinalDate = dates.format(currentTime);
-            date1 = dates.parse(lockDownDate);
-            date2 = dates.parse(FinalDate);
-            long difference = Math.abs(date1.getTime() - date2.getTime());
-            long differenceDates = difference / (24 * 60 * 60 * 1000);
+            Long differenceDates = new DateHelper().numDaysBetweenNowDate(lockDownDate);
             String dayDifference = Long.toString(differenceDates);
-
             if (ladyChecked) {
-                //Elderly Lady Chosen
-                String elderlyLady = getString(R.string.rec_conf_elderly_lady_start) + " " + dayDifference + " " + getString(R.string.rec_con_elderly_end);
+                String elderlyLady = getString(R.string.rec_conf_elderly_lady_start) +
+                        " " + dayDifference + " " + getString(R.string.rec_con_elderly_end);
                 writingToText.setText(elderlyLady);
             } else {
-                //Elderly Gentleman Chosen
-                String elderlyGentleman = getString(R.string.rec_conf_elderly_gentleman_start) + " " + dayDifference + " " + getString(R.string.rec_con_elderly_end);
+                String elderlyGentleman = getString(R.string.rec_conf_elderly_gentleman_start) +
+                        " " + dayDifference + " " + getString(R.string.rec_con_elderly_end);
                 writingToText.setText(elderlyGentleman);
             }
         }
     }
 
     public void createContinueButton(View view) {
-        // User finished with activity
-        fireBaseHelper.updateLetterDetails(mainUserLetter.getText().toString());
-
-
-        if (mainUserLetter.getText().toString().length() > 7) {
-            // Letter has text.
-            if (!imageRequired) {
-                //Letter has text and image not required
-                if (deliveryChosen) {
-                startAlarm(NotificationHelper.DELIVERY_NOT_TIME);
-                Intent intent = new Intent(this, Sent.class);
-                startActivity(intent);}
-                else {Toast.makeText(this, "Please choose a delivery method", Toast.LENGTH_LONG).show();
-                    deliveryLayout.startAnimation(expandIn);}
-            } else {
-                //Letter has text and image is required
-                if (imageChosen) {
-                    if (deliveryChosen) {
-
-                        if (imageUploadProgress >= 95) {
-                        startAlarm(NotificationHelper.DELIVERY_NOT_TIME);
-                        Intent intent = new Intent(this, Sent.class);
-                        startActivity(intent);}
-                        else {
-                            Toast.makeText(this, "Please wait, uploading image: " + imageUploadProgress, Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                    else {Toast.makeText(this, "Please choose a delivery method", Toast.LENGTH_LONG).show();
-                        deliveryLayout.startAnimation(expandIn);}
-                }
-                else {
-                    // image required but not selected
+        mainLetterDetails.setMainText(mainUserLetter.getText().toString());
+        LETTER_RESULT result = mainLetterDetails.isOkayToUpload();
+        switch (result) {
+            case SMALL_TEXT: Toast.makeText(this, "Letter must contain more than " +
+                    "30 characters", Toast.LENGTH_LONG).show();
+            case NO_IMAGE: {
                 Toast.makeText(this, "Please upload an image", Toast.LENGTH_LONG).show();
-                changeImage.startAnimation(expandIn);}
+                changeImage.startAnimation(expandIn);
             }
-        } else {
-            // Letter has no text
-            Toast.makeText(this, "Letter must contain more than 20 words", Toast.LENGTH_LONG).show();
+            case NO_DELIVERY: {
+                Toast.makeText(this, "Please choose a delivery method", Toast.LENGTH_LONG).show();
+                deliveryLayout.startAnimation(expandIn);
+            }
+            case UPLOADING_IMG: Toast.makeText(this, "Please wait, uploading image: "
+                            + imageUploadProgress + "%",
+                    Toast.LENGTH_SHORT).show();
+            case SUCCESS: {
+                fireBaseHelper.updateLetterDetails(mainLetterDetails);
+                startAlarm();
+                Intent intent = new Intent(this, Sent.class);
+                startActivity(intent);
+            }
         }
     }
 
-    private void startAlarm(int secs) {
+    private void startAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReciever.class);
         intent.putExtra("notification", NotificationHelper.DELIVERY_NOT);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-        long milliSecsFromNow = System.currentTimeMillis() + secs * 1000;
+        long milliSecsFromNow = System.currentTimeMillis() + NotificationHelper.DELIVERY_NOT_TIME * 1000;
         alarmManager.set(AlarmManager.RTC_WAKEUP, milliSecsFromNow, pendingIntent);
     }
 
-
     public void addImageButton(View view) {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     IMAGE_PICK_CODE);
         }
     }
@@ -226,25 +184,23 @@ public class CreateLetterV2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        fireBaseHelper.updateLetterDetails(mainUserLetter.getText().toString());
-
             if (requestCode == IMAGE_PICK_CODE) {
-
                 if (data == null) {Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();}
                 else {
-            uri= data.getData();
-            fireBaseHelper.uploadImage(uri);
-            userImgView.setImageURI(uri);
-            userImgView.setVisibility(View.VISIBLE);
-            addImageBut.setVisibility(View.GONE);
-            changeImage.setVisibility(View.VISIBLE);
-            changeImage.setText(getString(R.string.change_image));
-            deliveryLayout.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Photo added", Toast.LENGTH_SHORT).show();
-            imageChosen = true;}}
+                    uri= data.getData();
+                    fireBaseHelper.uploadImage(uri);
+                    userImgView.setImageURI(uri);
+                    userImgView.setVisibility(View.VISIBLE);
+                    addImageBut.setVisibility(View.GONE);
+                    changeImage.setVisibility(View.VISIBLE);
+                    changeImage.setText(getString(R.string.change_image));
+                    deliveryLayout.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, "Photo added", Toast.LENGTH_SHORT).show();
+                    mainLetterDetails.setImageChosen(true);}}
             else if (requestCode == DELIVERY_OPTION_CODE) {
-                 result = data.getBooleanExtra("result", false);
-                 deliveryChosen = true;
+                assert data != null;
+                boolean result = data.getBooleanExtra("result", false);
+                mainLetterDetails.setDeliveryChosen(true);
                 if (result){
                     deliveryOption.setText(getString(R.string.paid_chosen));
                     fireBaseHelper.updateDeliveryMethodDetails(true);
@@ -257,18 +213,13 @@ public class CreateLetterV2 extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case IMAGE_PICK_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openGallery();
-                } else {
-                    // permission denied.
-                    Toast.makeText(this, "Permission required to add a photo!", Toast.LENGTH_LONG).show();
-                }
-                return;
+        if (requestCode == IMAGE_PICK_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            } else {
+                Toast.makeText(this, "Permission required to add a photo!", Toast.LENGTH_LONG).show();
             }
-                }
+        }
             }
 
     public void deliveryButtonPressed(View view) {

@@ -39,11 +39,7 @@ public class PreLetterCreation extends AppCompatActivity {
     FirebaseHelper fireBaseHelper;
     FirebaseUser firebaseUser;
 
-    public static Boolean keyWorkerSelected;
-    public static Boolean ladyChecked;
-    public static int sessionNumber;
-
-    SessionRecipient sessionRecipient;
+    public static SessionRecipient sessionRecipient;
 
     String userID;
 
@@ -56,9 +52,9 @@ public class PreLetterCreation extends AppCompatActivity {
         assert firebaseUser != null;
         userID = firebaseUser.getUid();
 
+        createNewSessionRecipient();
         fireBaseHelper = new FirebaseHelper();
         fireBaseHelper.incrementUserSessions();
-        createNewSessionRecipient();
 
         genderRadGroup = findViewById(R.id.genderRadioGroup);
         genderText = findViewById(R.id.genderText);
@@ -90,7 +86,6 @@ public class PreLetterCreation extends AppCompatActivity {
 
     private void createNewSessionRecipient() {
         sessionRecipient = new SessionRecipient();
-        sessionRecipient.sessionID = sessionNumber;
     }
 
     private void setOnCheckedListeners() {
@@ -163,10 +158,10 @@ public class PreLetterCreation extends AppCompatActivity {
     }
 
     public void showCorrectCharacterImages() {
-        if (keyWorkerSelected) {
+        if (sessionRecipient.keyWorker) {
 
             if (sessionRecipient.isCompleted()) {
-                if (ladyChecked) {
+                if (sessionRecipient.lady) {
                     showSingleCharacter(nurseImg);
                     recipientText.setText(R.string.key_female_explained);
                 } else {
@@ -177,7 +172,7 @@ public class PreLetterCreation extends AppCompatActivity {
         }
         else {
             if (sessionRecipient.isCompleted()) {
-                if (ladyChecked) {
+                if (sessionRecipient.lady) {
                     showSingleCharacter(grandmaImg);
                     recipientText.setText(R.string.elderly_female_explained);}
                 else {
