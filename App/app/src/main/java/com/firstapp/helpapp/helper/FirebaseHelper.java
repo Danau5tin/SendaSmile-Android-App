@@ -35,7 +35,7 @@ public class FirebaseHelper {
 
     private DatabaseReference currentPath;
 
-    FirebaseHelper(){
+    public FirebaseHelper(){
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.firebaseUser = firebaseAuth.getCurrentUser();
         this.database = FirebaseDatabase.getInstance();

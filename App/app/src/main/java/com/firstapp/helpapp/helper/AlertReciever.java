@@ -10,12 +10,11 @@ import com.firstapp.helpapp.helper.NotificationHelper;
 
 public class AlertReciever extends BroadcastReceiver {
 
-    String notification;
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        notification = intent.getStringExtra("notification");
+        String notification = intent.getStringExtra("notification");
         NotificationHelper notificationHelper = new NotificationHelper(context);
+        assert notification != null;
         NotificationCompat.Builder nb = notificationHelper.getChannelNotification(notification);
         notificationHelper.getManager().notify(1, nb.build());
     }

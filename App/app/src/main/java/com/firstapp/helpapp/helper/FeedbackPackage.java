@@ -19,7 +19,7 @@ public class FeedbackPackage {
     private Context context;
     private FirebaseHelper firebaseHelper;
 
-    FeedbackPackage(Context context, FirebaseHelper firebaseHelper) {
+    public FeedbackPackage(Context context, FirebaseHelper firebaseHelper) {
         this.context = context;
         this.packageManager = context.getPackageManager();
         this.firebaseHelper = firebaseHelper;
